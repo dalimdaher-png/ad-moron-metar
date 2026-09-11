@@ -123,6 +123,58 @@
   }
   @media (prefers-reduced-motion: reduce) { .viewing .window { transition: none; } }
 
+  /* ---------- dashboard ---------- */
+  .dash { max-width: 1180px; margin: 22px auto 0; padding: 0 24px; }
+  .dash-head {
+    display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 8px;
+  }
+  .dash-head h2 {
+    font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted);
+    font-weight: 600; margin: 0;
+  }
+  .dash-range { font-size: 12px; color: var(--ink-soft); }
+  .tiles {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+  }
+  @media (max-width: 760px) { .tiles { grid-template-columns: repeat(2, 1fr); } }
+  .tile {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+    padding: 14px 16px; box-shadow: var(--shadow);
+  }
+  .tile .num {
+    font-family: "Big Shoulders Display", sans-serif; font-weight: 800;
+    font-size: 30px; line-height: 1; color: var(--ink);
+  }
+  .tile.hi .num { color: var(--accent); }
+  .tile .lbl {
+    margin-top: 5px; font-size: 12px; color: var(--muted); font-weight: 500;
+  }
+  .tile .sub { font-size: 11.5px; color: var(--ink-soft); margin-top: 2px; }
+
+  .dash-row {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px;
+  }
+  @media (max-width: 760px) { .dash-row { grid-template-columns: 1fr; } }
+  .dash-card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+    padding: 14px 16px; box-shadow: var(--shadow);
+  }
+  .dash-card-title {
+    font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted);
+    font-weight: 600; margin-bottom: 10px;
+  }
+  .cond-bar {
+    height: 10px; border-radius: 5px; overflow: hidden; display: flex; gap: 2px;
+    background: var(--muted-soft);
+  }
+  .cond-bar span { display: block; }
+  .cond-legend {
+    display: flex; gap: 16px; flex-wrap: wrap; margin-top: 10px; font-size: 12.5px; color: var(--ink-soft);
+  }
+  .cond-legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .cond-legend i { width: 8px; height: 8px; border-radius: 2px; display: inline-block; }
+  .dash-empty { color: var(--muted); font-size: 12.5px; }
+
   /* ---------- day strip ---------- */
   .daystrip-wrap { max-width: 1180px; margin: 22px auto 0; padding: 0 24px; }
   .daystrip-head {
@@ -296,6 +348,25 @@
   </div>
 </header>
 
+<section class="dash" id="dash" aria-label="Resumen general">
+  <div class="dash-head">
+    <h2>Resumen general</h2>
+    <div class="dash-range" id="dashRange"></div>
+  </div>
+  <div class="tiles" id="tiles"></div>
+  <div class="dash-row">
+    <div class="dash-card">
+      <div class="dash-card-title">Condición del período</div>
+      <div class="cond-bar" id="condBar"></div>
+      <div class="cond-legend" id="condLegend"></div>
+    </div>
+    <div class="dash-card">
+      <div class="dash-card-title">Movimientos por tipo</div>
+      <div class="mov-chips" id="movBreakdown"></div>
+    </div>
+  </div>
+</section>
+
 <section class="daystrip-wrap">
   <div class="daystrip-head">
     <h2>Elegí un día — agosto 2026</h2>
@@ -337,6 +408,65 @@
   function esFlag(h) {
     return h.condicion === 'IMC' && h.movimientos > 0 && !h.marca_manual;
   }
+
+  // ---------- resumen general ----------
+  var totH = 0, imc = 0, vmc = 0, sd = 0, flagH = 0, flagMov = 0;
+  var marcadas = 0, marcadasImc = 0, movTot = 0;
+  var mv = { comercial: 0, oficial: 0, otros: 0, local: 0, sobrevuelo: 0, ifr: 0 };
+  claves.forEach(function (k) {
+    dias[k].forEach(function (h) {
+      totH++;
+      if (h.condicion === 'IMC') imc++; else if (h.condicion === 'VMC') vmc++; else sd++;
+      if (esFlag(h)) { flagH++; flagMov += h.movimientos; }
+      if (h.marca_manual) { marcadas++; if (h.condicion === 'IMC') marcadasImc++; }
+      movTot += h.movimientos;
+      var d = h.mov_detalle || {};
+      mv.comercial += d.comercial || 0; mv.oficial += d.oficial || 0; mv.otros += d.otros || 0;
+      mv.local += d.local || 0; mv.sobrevuelo += d.sobrevuelo || 0; mv.ifr += d.ifr || 0;
+    });
+  });
+  var conDato = imc + vmc;
+  function pct(n, d) { return d ? Math.round(1000 * n / d) / 10 : 0; }
+  function rangoCorto() {
+    if (!claves.length) return '';
+    var p1 = claves[0].split('-'), p2 = claves[claves.length - 1].split('-');
+    var d1 = parseInt(p1[2], 10), d2 = parseInt(p2[2], 10);
+    if (p1[0] === p2[0] && p1[1] === p2[1]) {
+      return (d1 === d2 ? d1 : d1 + '–' + d2) + ' de ' + MES[parseInt(p1[1], 10) - 1] + ' de ' + p1[0];
+    }
+    return p1[2] + '/' + p1[1] + '/' + p1[0] + ' – ' + p2[2] + '/' + p2[1] + '/' + p2[0];
+  }
+
+  document.getElementById('dashRange').textContent = rangoCorto();
+
+  var tiles = document.getElementById('tiles');
+  function tile(num, lbl, sub, hi) {
+    var d = document.createElement('div');
+    d.className = 'tile' + (hi ? ' hi' : '');
+    d.innerHTML = '<div class="num disp">' + num + '</div><div class="lbl">' + lbl + '</div>' + (sub ? '<div class="sub">' + sub + '</div>' : '');
+    return d;
+  }
+  tiles.appendChild(tile(totH, 'Horas con dato', rangoCorto()));
+  tiles.appendChild(tile(imc, 'Horas IMC', pct(imc, conDato) + '% del total con dato'));
+  tiles.appendChild(tile(vmc, 'Horas VMC', pct(vmc, conDato) + '% del total con dato'));
+  tiles.appendChild(tile(movTot, 'Movimientos totales', 'en todo el período' + (mv.ifr ? ' · ' + mv.ifr + ' IFR' : '')));
+  tiles.appendChild(tile(flagH + ' / ' + flagMov, 'IMC c/ tráfico sin marcar', 'horas / movimientos — hallazgo principal', true));
+  tiles.appendChild(tile(marcadas, 'Marcas manuales "IMC"', marcadas ? pct(marcadasImc, marcadas) + '% coincide con IMC automático' : 'sin marcas en el período'));
+
+  document.getElementById('condBar').innerHTML =
+    '<span style="background:var(--warn);flex:' + imc + '" title="IMC: ' + imc + ' h"></span>' +
+    '<span style="background:var(--ok);flex:' + vmc + '" title="VMC: ' + vmc + ' h"></span>' +
+    (sd ? '<span style="background:var(--muted);flex:' + sd + '" title="Sin dato: ' + sd + ' h"></span>' : '');
+  document.getElementById('condLegend').innerHTML =
+    '<span><i style="background:var(--warn)"></i>IMC · ' + imc + ' h (' + pct(imc, totH) + '%)</span>' +
+    '<span><i style="background:var(--ok)"></i>VMC · ' + vmc + ' h (' + pct(vmc, totH) + '%)</span>' +
+    (sd ? '<span><i style="background:var(--muted)"></i>Sin dato · ' + sd + ' h (' + pct(sd, totH) + '%)</span>' : '');
+
+  var rubrosTot = [['Comercial', mv.comercial], ['Oficial', mv.oficial], ['Otros', mv.otros],
+                   ['Local', mv.local], ['Sobrevuelo', mv.sobrevuelo]];
+  document.getElementById('movBreakdown').innerHTML = movTot
+    ? rubrosTot.map(function (p) { return '<span class="mov-chip"><b>' + p[1] + '</b>' + p[0] + '</span>'; }).join('')
+    : '<span class="dash-empty">Sin movimientos registrados en el período.</span>';
 
   // ---------- tira de días ----------
   var strip = document.getElementById('daystrip');
