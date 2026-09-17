@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Torre Morón Agosto 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --plane:#f2f5f6; --surface:#ffffff; --surface-2:#e9edef; --sunken:#f7f9fa;
+  --ink:#0d1315; --ink-2:#576167; --ink-3:#8a949a;
+  --rule:#dde3e6; --grid:#eaeef0;
+  --mov:#2a78d6; --imc:#eb6834;
+  --s0:#eef2f4; --s1:#cde2fb; --s2:#9ec5f4; --s3:#6da7ec; --s4:#3987e5; --s5:#256abf; --s6:#104281;
+  --imc-wash:rgba(235,104,52,.14);
+  --shadow:0 1px 2px rgba(13,19,21,.05), 0 8px 24px -16px rgba(13,19,21,.28);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --plane:#0d1113; --surface:#171b1e; --surface-2:#212729; --sunken:#12171a;
+    --ink:#f2f5f6; --ink-2:#a8b2b8; --ink-3:#7b858b;
+    --rule:#272d31; --grid:#22282b;
+    --mov:#3987e5; --imc:#d95926;
+    --s0:#1d2326; --s1:#104281; --s2:#184f95; --s3:#256abf; --s4:#3987e5; --s5:#6da7ec; --s6:#9ec5f4;
+    --imc-wash:rgba(217,89,38,.20);
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
+  }
+}
+:root[data-theme="dark"]{
+  --plane:#0d1113; --surface:#171b1e; --surface-2:#212729; --sunken:#12171a;
+  --ink:#f2f5f6; --ink-2:#a8b2b8; --ink-3:#7b858b;
+  --rule:#272d31; --grid:#22282b;
+  --mov:#3987e5; --imc:#d95926;
+  --s0:#1d2326; --s1:#104281; --s2:#184f95; --s3:#256abf; --s4:#3987e5; --s5:#6da7ec; --s6:#9ec5f4;
+  --imc-wash:rgba(217,89,38,.20);
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--plane); color:var(--ink);
+  font-family:"Barlow",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:15px; line-height:1.5; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1240px; margin:0 auto; padding:0 20px 72px}
+
+/* ---------- cabecera ---------- */
+.masthead{border-bottom:1px solid var(--rule); padding:28px 0 18px; margin-bottom:26px}
+.mast-top{display:flex; flex-wrap:wrap; align-items:baseline; gap:14px 20px}
+h1{
+  font-family:"Barlow Condensed",Barlow,sans-serif; font-weight:600;
+  font-size:clamp(26px,4vw,38px); letter-spacing:.005em; margin:0; text-wrap:balance;
+}
+.mast-sub{color:var(--ink-2); font-size:14px; margin:0}
+.icao{
+  font-family:"IBM Plex Mono",ui-monospace,monospace; font-size:12px; font-weight:500;
+  letter-spacing:.10em; color:var(--ink-2); border:1px solid var(--rule);
+  border-radius:3px; padding:3px 8px; background:var(--surface);
+}
+.strip{
+  margin-top:16px; display:flex; flex-wrap:wrap; gap:8px 26px; align-items:baseline;
+  padding:11px 14px; background:var(--surface); border:1px solid var(--rule);
+  border-left:3px solid var(--imc); border-radius:3px; font-size:13.5px; color:var(--ink-2);
+}
+.strip b{color:var(--ink); font-weight:600}
+.strip code{font-family:"IBM Plex Mono",monospace; font-size:12.5px; color:var(--ink)}
+
+/* ---------- secciones ---------- */
+section{margin-top:44px}
+.eyebrow{
+  font-family:"Barlow Condensed",sans-serif; font-weight:600; font-size:13px;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--ink-3);
+  display:flex; align-items:center; gap:12px; margin:0 0 14px;
+}
+.eyebrow::after{content:""; flex:1; height:1px; background:var(--rule)}
+.lede{margin:-6px 0 18px; color:var(--ink-2); font-size:14.5px; max-width:66ch}
+
+/* ---------- tiles ---------- */
+.tiles{display:grid; grid-template-columns:repeat(auto-fit,minmax(168px,1fr)); gap:1px;
+  background:var(--rule); border:1px solid var(--rule); border-radius:4px; overflow:hidden}
+.tile{background:var(--surface); padding:15px 16px 16px}
+.tile .lab{font-size:12.5px; color:var(--ink-2); letter-spacing:.01em}
+.tile .val{font-size:31px; font-weight:600; line-height:1.12; margin-top:5px; font-variant-numeric:tabular-nums}
+.tile .sub{font-size:12.5px; color:var(--ink-3); margin-top:3px; font-variant-numeric:tabular-nums}
+.tile.hot .val{color:var(--imc)}
+
+/* ---------- card ---------- */
+.card{background:var(--surface); border:1px solid var(--rule); border-radius:4px;
+  padding:18px 18px 14px; box-shadow:var(--shadow)}
+.card + .card{margin-top:14px}
+.card h3{font-size:14.5px; font-weight:600; margin:0 0 2px}
+.card p.note{font-size:12.5px; color:var(--ink-3); margin:0 0 12px}
+.two{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+@media (max-width:860px){.two{grid-template-columns:1fr}}
+
+/* ---------- matriz ---------- */
+.matrix-scroll{overflow-x:auto; padding-bottom:4px}
+.matrix{display:grid; grid-template-columns:52px repeat(31,minmax(20px,1fr)); gap:2px; min-width:820px}
+.mx-h{font-family:"IBM Plex Mono",monospace; font-size:10px; color:var(--ink-3);
+  text-align:center; padding-bottom:3px; font-variant-numeric:tabular-nums}
+.mx-r{font-family:"IBM Plex Mono",monospace; font-size:10.5px; color:var(--ink-3);
+  display:flex; align-items:center; justify-content:flex-end; padding-right:7px;
+  font-variant-numeric:tabular-nums}
+.cell{aspect-ratio:1/1; border-radius:2px; background:var(--s0); cursor:default;
+  position:relative; min-height:15px}
+.cell.imc::after{content:""; position:absolute; inset:0; border-radius:2px;
+  border:1.5px solid var(--imc);
+  background:repeating-linear-gradient(45deg,var(--imc-wash) 0 2px,transparent 2px 5px)}
+.cell.sd{background:transparent; border:1px dashed var(--rule)}
+.cell:hover{outline:2px solid var(--ink); outline-offset:1px; z-index:3}
+.mx-legend{display:flex; flex-wrap:wrap; gap:8px 22px; align-items:center;
+  margin-top:14px; font-size:12.5px; color:var(--ink-2)}
+.ramp{display:flex; gap:2px; align-items:center}
+.ramp i{width:16px; height:11px; border-radius:2px; display:block}
+.key{display:inline-flex; align-items:center; gap:7px}
+.key .sw{width:13px; height:13px; border-radius:2px; display:inline-block; flex:none}
+.sw.imc{border:1.5px solid var(--imc);
+  background:repeating-linear-gradient(45deg,var(--imc-wash) 0 2px,transparent 2px 5px)}
+.sw.sd{border:1px dashed var(--rule)}
+
+/* ---------- tooltip ---------- */
+#tip{position:fixed; z-index:60; pointer-events:none; opacity:0; transition:opacity .09s;
+  background:var(--surface); color:var(--ink); border:1px solid var(--rule); border-radius:4px;
+  box-shadow:0 6px 28px -8px rgba(0,0,0,.35); padding:10px 12px; max-width:330px; font-size:13px}
+#tip.on{opacity:1}
+#tip .t-h{font-family:"Barlow Condensed",sans-serif; font-weight:600; letter-spacing:.07em;
+  text-transform:uppercase; font-size:12px; color:var(--ink-3); margin-bottom:5px}
+#tip .t-r{display:flex; justify-content:space-between; gap:18px; font-variant-numeric:tabular-nums}
+#tip .t-r span:last-child{font-weight:600}
+#tip .t-m{font-family:"IBM Plex Mono",monospace; font-size:11.5px; color:var(--ink-2);
+  margin-top:7px; padding-top:7px; border-top:1px solid var(--rule); word-break:break-word; line-height:1.45}
+#tip .pill{display:inline-block; font-size:11px; font-weight:600; letter-spacing:.05em;
+  padding:1px 6px; border-radius:3px; margin-left:6px}
+.pill-imc{background:var(--imc); color:#fff}
+.pill-vmc{background:var(--surface-2); color:var(--ink-2)}
+
+/* ---------- svg ---------- */
+svg{display:block; width:100%; height:auto; overflow:visible}
+.ax{font-family:"IBM Plex Mono",monospace; font-size:9.5px; fill:var(--ink-3)}
+.axl{font-family:"Barlow Condensed",sans-serif; font-size:11px; letter-spacing:.08em;
+  text-transform:uppercase; fill:var(--ink-3)}
+.gl{stroke:var(--grid); stroke-width:1}
+.bl{stroke:var(--rule); stroke-width:1}
+.hit{fill:transparent}
+.hit:hover{fill:var(--ink); fill-opacity:.05}
+.dlab{font-family:"IBM Plex Mono",monospace; font-size:9.5px; font-weight:500; fill:var(--imc)}
+
+/* ---------- leyenda ---------- */
+.legend{display:flex; flex-wrap:wrap; gap:8px 20px; font-size:12.5px; color:var(--ink-2); margin-bottom:10px}
+
+/* ---------- tablas ---------- */
+details{margin-top:10px}
+summary{cursor:pointer; font-size:13px; color:var(--ink-2); padding:4px 0;
+  font-family:"Barlow Condensed",sans-serif; letter-spacing:.09em; text-transform:uppercase; font-weight:600}
+summary:focus-visible{outline:2px solid var(--mov); outline-offset:2px; border-radius:2px}
+.tw{overflow-x:auto; margin-top:8px}
+table{border-collapse:collapse; width:100%; font-size:13px; min-width:560px}
+th,td{text-align:left; padding:6px 10px; border-bottom:1px solid var(--rule); white-space:nowrap}
+th{font-family:"Barlow Condensed",sans-serif; font-weight:600; font-size:12px; letter-spacing:.09em;
+  text-transform:uppercase; color:var(--ink-3); position:sticky; top:0; background:var(--surface)}
+td.n{text-align:right; font-variant-numeric:tabular-nums}
+td.m{font-family:"IBM Plex Mono",monospace; font-size:11.5px; color:var(--ink-2); white-space:normal; min-width:280px}
+tbody tr:hover{background:var(--sunken)}
+.tag{font-family:"IBM Plex Mono",monospace; font-size:11px; font-weight:500; padding:1px 6px;
+  border-radius:3px; background:var(--imc); color:#fff}
+
+/* ---------- pie ---------- */
+footer{margin-top:52px; padding-top:20px; border-top:1px solid var(--rule);
+  font-size:13px; color:var(--ink-2)}
+footer h4{font-family:"Barlow Condensed",sans-serif; font-size:13px; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--ink-3); margin:0 0 8px; font-weight:600}
+footer ul{margin:0 0 16px; padding-left:18px}
+footer li{margin-bottom:5px}
+footer code{font-family:"IBM Plex Mono",monospace; font-size:12px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important; animation:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="masthead">
+  <div class="mast-top">
+    <h1>Movimiento de aeronaves y condición meteorológica</h1>
+    <span class="icao">SADM</span>
+  </div>
+  <p class="mast-sub">Torre Morón &middot; agosto 2026 &middot; 31 días, 744 franjas horarias &middot; todas las horas en UTC (Z)</p>
+  <div class="strip">
+    <span>Se considera el aeródromo <b>bajo IMC</b> cuando la visibilidad es menor a <code>5 km</code> <b>o</b> el techo de nubes es menor a <code>1000 ft</code></span>
+    <span>Techo = base de la capa más baja BKN u OVC (o visibilidad vertical). SCT y FEW no constituyen techo</span>
+    <span>Cada franja horaria toma la <b>peor</b> condición reportada dentro de esa hora, incluidos los SPECI</span>
+  </div>
+</header>
+
+<section>
+  <h2 class="eyebrow">Resumen del mes</h2>
+  <div class="tiles" id="tiles"></div>
+  <p class="lede" style="margin-top:14px" id="nota-resumen"></p>
+</section>
+
+<section>
+  <h2 class="eyebrow">Día por día</h2>
+  <p class="lede">Los movimientos de cada día, separados según la condición del aeródromo en la franja en que ocurrieron. Debajo, cuántas franjas de ese día estuvieron bajo IMC.</p>
+  <div class="card">
+    <h3>Movimientos por día, según condición de la franja</h3>
+    <p class="note">Barra apilada: total del día dividido entre franjas VMC y franjas IMC.</p>
+    <div class="legend">
+      <span class="key"><span class="sw" style="background:var(--mov)"></span> En franja VMC</span>
+      <span class="key"><span class="sw" style="background:var(--imc)"></span> En franja IMC</span>
+    </div>
+    <div id="c-dia"></div>
+  </div>
+  <div class="card">
+    <h3>Franjas bajo IMC por día</h3>
+    <p class="note">Sobre 24 franjas diarias. Mismo eje horizontal que el gráfico de arriba.</p>
+    <div id="c-imcdia"></div>
+    <details>
+      <summary>Ver tabla diaria</summary>
+      <div class="tw"><table id="t-dia"></table></div>
+    </details>
+  </div>
+</section>
+
+<section>
+  <h2 class="eyebrow">Perfil horario</h2>
+  <p class="lede">Dónde está el tráfico dentro del día y dónde está el mal tiempo. La operación se concentra entre las 11Z y las 21Z; la niebla y los techos bajos caen sistemáticamente antes.</p>
+  <div class="two">
+    <div class="card">
+      <h3>Movimientos por franja horaria</h3>
+      <p class="note">Suma de los 31 días.</p>
+      <div id="c-hora"></div>
+    </div>
+    <div class="card">
+      <h3>Franjas bajo IMC, por hora del día</h3>
+      <p class="note">Porcentaje de días del mes en que esa franja estuvo bajo IMC.</p>
+      <div id="c-imchora"></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2 class="eyebrow">Composición</h2>
+  <div class="two">
+    <div class="card">
+      <h3>Movimientos por tipo</h3>
+      <p class="note">Total del mes.</p>
+      <div id="c-tipo"></div>
+    </div>
+    <div class="card">
+      <h3>Pista en uso</h3>
+      <p class="note">Cantidad de franjas horarias con cada pista designada.</p>
+      <div id="c-pista"></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2 class="eyebrow">Franjas IMC con tráfico</h2>
+  <p class="lede" id="lede-imc"></p>
+  <div class="card">
+    <div class="tw"><table id="t-imc"></table></div>
+  </div>
+</section>
+
+<footer>
+  <h4>Método</h4>
+  <ul>
+    <li>Fuente meteorológica: archivo público de METAR y SPECI de SADM (Iowa Environmental Mesonet). Es el mismo texto crudo que publica Ogimet y puede verificarse reporte por reporte.</li>
+    <li>Fuente de movimientos: PLANILLA MOV ACFT, una hoja por día, franjas horarias UTC de las filas 10 a 33.</li>
+    <li>Una franja se cuenta IMC si <b>cualquier</b> reporte dentro de esa hora &mdash; METAR de la hora en punto o SPECI intermedio &mdash; está por debajo del umbral.</li>
+    <li><code>CAVOK</code> equivale a visibilidad de 10 km o más sin nubes significativas: VMC. Se usa &laquo;menor que&raquo;: un BKN u OVC a 900 ft es IMC, a 1000 ft es VMC.</li>
+  </ul>
+  <h4>Advertencias sobre los datos</h4>
+  <ul id="avisos"></ul>
+</footer>
+
+</div>
+<div id="tip" role="status" aria-live="polite"></div>
+<script>window.__DATOS__={"rows":[[1,0,0,0,0,0,"VMC",8000,4000,0,"","SADM 010000Z 36009KT 8000 -TSRA FEW037CB OVC040 22/20 Q1002",0,0,0,0,0,0],[1,1,0,0,0,0,"VMC",9000,4000,0,"","SADM 010100Z 36013KT 9000 -TSRA FEW035CB OVC040 21/20 Q1001",0,0,0,0,0,0],[1,2,0,0,0,0,"VMC",9000,4000,0,"","SADM 010200Z 27008KT 9000 -TSRA FEW035CB OVC040 20/20 Q1002",0,0,0,0,0,0],[1,3,0,0,0,0,"VMC",9000,4000,0,"","SADM 010300Z 18015KT 9000 -TSRA FEW032CB OVC040 19/18 Q1005",0,0,0,0,0,0],[1,4,0,0,0,0,"VMC",9000,5000,0,"","SADM 010400Z 22006KT 9000 -TSRA FEW035CB OVC050 19/18 Q1006",0,0,0,0,0,0],[1,5,0,0,0,0,"VMC",8000,5000,0,"","SADM 010500Z 25006KT 8000 -TSRA FEW040CB OVC050 18/18 Q1006",0,0,0,0,0,0],[1,6,0,0,0,0,"VMC",8000,5600,0,"","SADM 010600Z VRB03KT 8000 -TSRA FEW045CB OVC056 18/18 Q1004",0,0,0,0,0,0],[1,7,0,0,0,0,"VMC",8000,5000,0,"","SADM 010700Z 23011KT 8000 -RA FEW008 OVC050 18/18 Q1006 RE TS",0,0,0,0,0,0],[1,8,0,0,0,0,"IMC",null,600,0,"techo 600 ft","SADM 010800Z 20010KT 9999 OVC006 18/17 Q1007",0,0,0,0,0,0],[1,9,0,0,0,0,"IMC",null,900,0,"techo 900 ft","SADM 010900Z 20011KT 9999 OVC009 17/16 Q1008",0,0,0,0,0,0],[1,10,0,0,0,0,"VMC",null,1100,0,"","SADM 011000Z 19016KT 9999 OVC011 16/15 Q1007",0,0,0,0,0,0],[1,11,2,1,0,1,"VMC",null,2500,0,"","SADM 011100Z 18010KT 9999 SCT012 OVC025 16/14 Q1010",0,0,0,2,0,0],[1,12,7,1,0,1,"VMC",null,2200,0,"","SADM 011200Z 18006KT 9999 SCT015 OVC022 16/14 Q1010",0,0,0,7,0,0],[1,13,29,0,0,1,"VMC",null,2500,0,"","SADM 011300Z 20007KT 9999 BKN025 OVC100 16/14 Q1012",0,0,0,15,14,0],[1,14,3,0,0,1,"IMC",null,800,0,"techo 800 ft","SADM 011400Z 20009KT 9999 BKN008 OVC025 16/15 Q1012",0,0,0,2,0,1],[1,15,28,0,0,1,"VMC",null,3000,0,"","SADM 011500Z 18011KT 9999 FEW010 OVC030 16/15 Q1012",0,0,0,20,8,0],[1,16,35,0,0,1,"VMC",null,2000,0,"","SADM 011600Z 18010KT 9999 BKN020 OVC100 17/13 Q1012",0,0,0,19,16,0],[1,17,38,0,0,1,"VMC",null,null,0,"","SADM 011700Z 18013KT 9999 FEW025 SCT200 18/13 Q1012",0,0,0,26,12,0],[1,18,35,0,0,1,"VMC",null,null,0,"","SADM 011800Z 18012KT 9999 FEW025 19/13 Q1012",0,0,0,27,8,0],[1,19,25,0,0,1,"VMC",null,null,0,"","SADM 011900Z 18009KT CAVOK 20/12 Q1012",0,0,0,25,0,0],[1,20,34,0,0,1,"VMC",null,null,0,"","SADM 012000Z 18007KT CAVOK 19/11 Q1013",0,0,0,24,10,0],[1,21,11,0,0,1,"VMC",null,null,0,"","SADM 012100Z 20006KT CAVOK 17/10 Q1013",0,0,0,5,6,0],[1,22,0,0,0,0,"VMC",null,null,0,"","SADM 012200Z 20005KT CAVOK 16/10 Q1014",0,0,0,0,0,0],[1,23,0,0,0,0,"VMC",null,null,0,"","SADM 012300Z 20004KT CAVOK 15/10 Q1014",0,0,0,0,0,0],[2,0,0,0,0,0,"VMC",null,null,0,"","SADM 020000Z 09002KT CAVOK 12/11 Q1014",0,0,0,0,0,0],[2,1,0,0,0,0,"VMC",null,null,0,"","SADM 020100Z 11002KT CAVOK 12/11 Q1015",0,0,0,0,0,0],[2,2,0,0,0,0,"VMC",null,null,0,"","SADM 020200Z 11001KT CAVOK 11/11 Q1015",0,0,0,0,0,0],[2,3,0,0,0,0,"VMC",8000,null,0,"","SADM 020300Z 090002KT 8000 MIFG NSC 11/09 Q1015",0,0,0,0,0,0],[2,4,0,0,0,0,"VMC",8000,null,0,"","SADM 020400Z 14002KT 8000 MIFG NSC 10/09 Q1015",0,0,0,0,0,0],[2,5,0,0,0,0,"VMC",8000,null,0,"","SADM 020500Z 11002KT 8000 MIFG NSC 10/09 Q1014",0,0,0,0,0,0],[2,6,0,0,0,0,"VMC",7000,1400,0,"","SADM 020600Z 14002KT 7000 MIFG BKN014 10/09 Q1015",0,0,0,0,0,0],[2,7,0,0,0,0,"VMC",7000,1700,0,"","SADM 020700Z 18001KT 7000 MIFG BKN017 10/09 Q1015",0,0,0,0,0,0],[2,8,0,0,0,0,"IMC",3000,1700,0,"vis 3000 m","SADM 020800Z 16002KT 3000 MIFG BR BKN017 10/10 Q1015",0,0,0,0,0,0],[2,9,0,0,0,0,"VMC",null,1000,0,"","SADM 020900Z 05003KT 9999 OVC010 12/10 Q1016",0,0,0,0,0,0],[2,10,0,0,0,0,"IMC",null,300,0,"techo 300 ft","SADM 021000Z 05008KT 9999 OVC003 12/10 Q1016",0,0,0,0,0,0],[2,11,0,0,0,0,"IMC",8000,700,0,"techo 700 ft","SADM 021100Z 36009KT 8000 OVC007 12/11 Q1016",1,0,0,0,0,0],[2,12,0,0,0,0,"IMC",8000,500,0,"techo 500 ft","SADM 021200Z 05007KT 8000 OVC005 13/11 Q1016",1,0,0,0,0,0],[2,13,0,0,0,0,"IMC",null,600,0,"techo 600 ft","SADM 021300Z 05006KT 9999 OVC006 13/12 Q1016",1,0,0,0,0,0],[2,14,0,0,0,0,"IMC",null,800,0,"techo 800 ft","SADM 021400Z 05004KT 9999 OVC008 14/12 Q1016",1,0,0,0,0,0],[2,15,0,0,0,0,"IMC",null,900,0,"techo 900 ft","SADM 021500Z 07004KT 9999 OVC009 15/13 Q1016",1,0,0,0,0,0],[2,16,30,0,1,0,"VMC",null,20000,0,"","SADM 021600Z 05006KT 9999 SCT013 BKN200 16/13 Q1016",0,0,0,14,16,0],[2,17,0,0,0,0,"IMC",null,900,0,"techo 900 ft","COR SADM 021700Z 04007KT 9999 OVC009 16/13 Q1015",1,0,0,0,0,0],[2,18,13,0,1,0,"VMC",null,20000,0,"","SADM 021800Z 05009KT 9999 SCT010 BKN200 17/13 Q1014",0,0,0,9,4,0],[2,19,32,0,1,0,"VMC",null,20000,0,"","SADM 021900Z 02009KT 9999 SCT035 BKN200 18/14 Q1015",0,0,0,14,18,0],[2,20,9,0,1,0,"VMC",null,20000,0,"","SADM 022000Z 05004KT 9999 FEW020 BKN200 18/14 Q1015",0,0,0,9,0,0],[2,21,4,0,1,0,"VMC",null,null,0,"","SADM 022100Z 05004KT CAVOK 17/14 Q1015",0,0,0,4,0,0],[2,22,0,0,0,0,"VMC",null,null,0,"","SADM 022200Z 18002KT CAVOK 16/13 Q1016",0,0,0,0,0,0],[2,23,0,0,0,0,"VMC",null,null,0,"","SADM 022300Z 18005KT CAVOK 16/14 Q1017",0,0,0,0,0,0],[3,0,0,0,0,0,"VMC",null,null,0,"","SADM 030000Z 09005KT CAVOK 16/14 Q1017",0,0,0,0,0,0],[3,1,0,0,0,0,"VMC",null,null,0,"","SADM 030100Z 05007KT CAVOK 16/14 Q1016",0,0,0,0,0,0],[3,2,0,0,0,0,"VMC",null,null,0,"","SADM 030200Z 05007KT CAVOK 16/14 Q1016",0,0,0,0,0,0],[3,3,0,0,0,0,"VMC",null,null,0,"","SADM 030300Z 03005KT CAVOK 16/14 Q1017",0,0,0,0,0,0],[3,4,0,0,0,0,"VMC",null,null,0,"","SADM 030400Z 02004KT CAVOK 16/13 Q1017",0,0,0,0,0,0],[3,5,0,0,0,0,"VMC",null,null,0,"","SADM 030500Z 02004KT CAVOK 16/13 Q1017",0,0,0,0,0,0],[3,6,0,0,0,0,"VMC",null,null,0,"","SADM 030600Z 03002KT CAVOK 15/13 Q1016",0,0,0,0,0,0],[3,7,0,0,0,0,"VMC",9000,null,0,"","SADM 030700Z 09001KT 9000 NSC 13/13 Q1016",0,0,0,0,0,0],[3,8,0,0,0,0,"IMC",3000,null,0,"vis 3000 m","SADM 030800Z 11001KT 3000 BR NSC 12/12 Q1015",0,0,0,0,0,0],[3,9,0,0,0,0,"IMC",3000,null,0,"vis 3000 m","SADM 030900Z 09002KT 3000 BR NSC 14/13 Q1015",0,0,0,0,0,0],[3,10,0,0,0,0,"VMC",9000,null,0,"","SADM 031000Z 14002KT 9000 NSC 13/12 Q1015",0,0,0,0,0,0],[3,11,0,0,0,0,"IMC",3000,null,0,"vis 3000 m","SADM 031100Z 14002KT 3000 BR NSC 14/13 Q1016",1,0,0,0,0,0],[3,12,0,0,0,0,"IMC",2500,null,0,"vis 2500 m","SADM 031200Z 14004KT 2500 BR NSC 14/14 Q1016",1,0,0,0,0,0],[3,13,0,0,0,0,"IMC",3000,500,0,"vis 3000 m + techo 500 ft","SADM 031300Z 11003KT 3000 BR BKN005 OVC200 15/14 Q1017",1,0,0,0,0,0],[3,14,0,0,0,0,"IMC",5000,700,0,"techo 700 ft","SADM 031400Z 11005KT 5000 BR OVC007 16/14 Q1017",1,0,0,0,0,0],[3,15,0,0,0,0,"IMC",7000,800,0,"techo 800 ft","SADM 031500Z 14005KT 7000 OVC008 17/15 Q1017",1,0,0,0,0,0],[3,16,0,0,0,0,"IMC",6000,800,0,"techo 800 ft","SADM 031600Z 11004KT 6000 OVC008 16/14 Q1016",1,0,0,0,0,0],[3,17,2,0,0,1,"VMC",7000,1000,0,"","SADM 031700Z 14006KT 7000 SCT007 OVC010 16/14 Q1015",0,0,0,2,0,0],[3,18,24,0,0,1,"VMC",null,1100,0,"","SADM 031800Z 14008KT 9999 OVC011 16/13 Q1015",0,0,0,6,18,0],[3,19,46,0,0,1,"VMC",null,1200,0,"","SADM 031900Z 11006KT 9999 OVC012 16/13 Q1015",0,0,0,6,40,0],[3,20,21,0,0,1,"VMC",null,1200,0,"","SADM 032000Z 09007KT 9999 BKN012 OVC050 16/13 Q1015",0,0,0,3,18,0],[3,21,0,0,0,1,"VMC",null,1600,0,"","SADM 032100Z 11005KT 9999 OVC016 16/14 Q1015",0,0,0,0,0,0],[3,22,0,0,0,0,"VMC",null,5600,0,"","SADM 032200Z 11006KT 9999 SCT014 BKN056 15/14 Q1015",0,0,0,0,0,0],[3,23,0,0,0,0,"VMC",null,5600,0,"","SADM 032300Z 09007KT 9999 SCT016 BKN056 15/13 Q1015",0,0,0,0,0,0],[4,0,0,0,0,0,"VMC",null,1500,0,"","SADM 040000Z 14006KT 9999 OVC015 14/13 Q1016",0,0,0,0,0,0],[4,1,0,0,0,0,"VMC",null,1500,0,"","SADM 040100Z 14007KT 9999 OVC015 14/12 Q1016",0,0,0,0,0,0],[4,2,0,0,0,0,"VMC",null,1200,0,"","SADM 040200Z 14007KT 9999 OVC012 14/13 Q1016",0,0,0,0,0,0],[4,3,0,0,0,0,"VMC",null,1000,0,"","SADM 040300Z 14005KT 9999 OVC010 14/13 Q1017",0,0,0,0,0,0],[4,4,0,0,0,0,"IMC",null,800,0,"techo 800 ft","SADM 040400Z 14007KT 9999 OVC008 14/13 Q1017",0,0,0,0,0,0],[4,5,0,0,0,0,"IMC",null,800,0,"techo 800 ft","SADM 040500Z 14006KT 9999 OVC008 14/13 Q1017",0,0,0,0,0,0],[4,6,0,0,0,0,"IMC",null,500,0,"techo 500 ft","SADM 040600Z 14006KT 9999 OVC005 14/13 Q1017",0,0,0,0,0,0],[4,7,0,0,0,0,"IMC",null,500,0,"techo 500 ft","SADM 040700Z 16007KT 9999 OVC005 13/13 Q1016",0,0,0,0,0,0],[4,8,0,0,0,0,"IMC",null,500,0,"techo 500 ft","SADM 040800Z 18006KT 9999 OVC005 13/13 Q1016",0,0,0,0,0,0],[4,9,0,0,0,0,"IMC",null,400,0,"techo 400 ft","SADM 040900Z 18006KT 9999 OVC004 13/12 Q1017",0,0,0,0,0,0],[4,10,0,0,0,0,"IMC",null,500,0,"techo 500 ft","SADM 041000Z 16006KT 9999 OVC005 13/12 Q1017",0,0,0,0,0,0],[4,11,0,0,0,0,"IMC",5000,500,0,"techo 500 ft","SADM 041100Z 16005KT 5000 BR OVC005 11/10 Q1018",1,0,0,0,0,0],[4,12,0,0,0,0,"IMC",5000,400,0,"techo 400 ft","SADM 041200Z 11004KT 5000 BR OVC004 12/11 Q1018",1,0,0,0,0,0],[4,13,0,0,0,0,"IMC",6000,500,0,"techo 500 ft","SADM 041300Z 14006KT 6000 OVC005 12/10 Q1018",1,0,0,0,0,0],[4,14,0,0,0,0,"IMC",6000,600,0,"techo 600 ft","SADM 041400Z 14005KT 6000 OVC006 12/10 Q1019",1,0,0,0,0,0],[4,15,0,0,0,0,"IMC",6000,800,0,"techo 800 ft","SADM 041500Z 14007KT 6000 OVC008 13/10 Q1018",1,0,0,0,0,0],[4,16,0,0,0,0,"IMC",4000,1000,0,"vis 4000 m","SADM 041600Z 11005KT 4000 BR OVC010 13/10 Q1018",1,0,0,0,0,0],[4,17,0,0,0,0,"IMC",4000,1300,0,"vis 4000 m","COR SADM 041700Z 11005KT 4000 BR OVC013 14/10 Q1016",1,0,0,0,0,0],[4,18,13,0,0,1,"VMC",null,1600,0,"","SADM 041800Z 09008KT 9999 OVC016 15/10 Q1016",0,0,0,9,4,0],[4,19,34,0,0,1,"VMC",6000,1500,0,"","SADM 041900Z 11006KT 6000 OVC015 15/11 Q1016",0,0,0,11,22,1],[4,20,18,0,1,0,"VMC",8000,1500,0,"","SADM 042000Z 09003KT 8000 OVC015 16/12 Q1016",0,0,0,8,10,0],[4,21,0,0,0,0,"IMC",6000,900,0,"techo 900 ft","SADM 042100Z 09005KT 6000 OVC009 15/12 Q1016",0,0,0,0,0,0],[4,22,0,0,0,0,"IMC",8000,600,0,"techo 600 ft","SADM 042200Z 09005KT 8000 OVC006 14/13 Q1016",0,0,0,0,0,0],[4,23,0,0,0,0,"VMC",8000,2000,0,"","SADM 042300Z 07006KT 8000 SCT008 OVC020 14/12 Q1016",0,0,0,0,0,0],[5,0,0,0,0,0,"VMC",8000,2300,0,"","SADM 050000Z 09004KT 8000 FEW008 OVC023 14/12 Q1016",0,0,0,0,0,0],[5,1,0,0,0,0,"IMC",8000,800,0,"techo 800 ft","SADM 050100Z 09005KT 8000 BKN008 OVC023 14/12 Q1015",0,0,0,0,0,0],[5,2,0,0,0,0,"IMC",8000,800,0,"techo 800 ft","SADM 050200Z 09004KT 8000 BKN008 OVC019 15/12 Q1015",0,0,0,0,0,0],[5,3,0,0,0,0,"VMC",8000,2300,0,"","SADM 050300Z 09003KT 8000 OVC023 15/13 Q1015",0,0,0,0,0,0],[5,4,0,0,0,0,"VMC",8000,2500,0,"","SADM 050400Z 09004KT 8000 SCT008 OVC025 15/13 Q1015",0,0,0,0,0,0],[5,5,0,0,0,0,"VMC",8000,2500,0,"","SADM 050500Z 09004KT 8000 BRK008 OVC025 15/13 Q1014",0,0,0,0,0,0],[5,6,0,0,0,0,"IMC",3500,800,0,"vis 3500 m + techo 800 ft","SADM 050600Z 05004KT 3500 -DZ BR BKN008 OVC018 14/14 Q1014",0,0,0,0,0,0],[5,7,0,0,0,0,"IMC",3500,300,0,"vis 3500 m + techo 300 ft","SADM 050700Z 12002KT 3500 -DZ BR OVC003 14/14 Q1013",0,0,0,0,0,0],[5,8,0,0,0,0,"IMC",1000,300,0,"vis 1000 m + techo 300 ft","SADM 050800Z 18002KT 1000 BR OVC003 14/14 Q1013",0,0,0,0,0,0],[5,9,0,0,0,0,"IMC",1000,300,0,"vis 1000 m + techo 300 ft","SADM 050900Z 16004KT 1000 BR OVC003 14/14 Q1013",0,0,0,0,0,0],[5,10,0,0,0,0,"IMC",1000,300,0,"vis 1000 m + techo 300 ft","SADM 051000Z 18004KT 1000 -DZ BR OVC003 14/13 Q1013",0,0,0,0,0,0],[5,11,0,0,0,0,"IMC",2000,400,0,"vis 2000 m + techo 400 ft","SADM 051100Z 18010KT 2000 -DZ BR OVC004 13/13 Q1013",0,0,0,0,0,0],[5,12,0,0,0,0,"IMC",2000,300,0,"vis 2000 m + techo 300 ft","SADM 051200Z 16009KT 2000 -DZ BR OVC003 13/13 Q1013",0,0,0,0,0,0],[5,13,0,0,0,0,"IMC",null,500,0,"techo 500 ft","SADM 051300Z 16008KT 9999 OVC005 14/13 Q1014",0,0,0,0,0,0],[5,14,0,0,0,0,"IMC",null,400,0,"techo 400 ft","SADM 051400Z 16006KT 9999 OVC004 14/12 Q1014",0,0,0,0,0,0],[5,15,0,0,0,0,"IMC",null,700,0,"techo 700 ft","SADM 051500Z 14008KT 9999 OVC007 14/13 Q1013",0,0,0,0,0,0],[5,16,2,0,0,1,"VMC",null,1300,0,"","SADM 051600Z 18008KT 9999 BKN013 15/13 Q1013",0,0,0,2,0,0],[5,17,10,0,0,1,"VMC",null,1500,0,"","SADM 051700Z 14005KT 9999 OVC015 16/14 Q1011",0,0,0,2,8,0],[5,18,28,0,0,1,"VMC",null,1400,0,"","SADM 051800Z 11002KT 9999 OVC014 16/14 Q1011",0,0,0,12,16,0],[5,19,61,0,0,1,"VMC",null,1500,0,"","COR SADM 051900Z 20003KT 9999 OVC015 16/14 Q1011",0,0,0,17,44,0],[5,20,32,0,0,1,"VMC",null,1700,0,"","SADM 052000Z 23006KT 9999 OVC017 16/15 Q1011",0,0,0,16,16,0],[5,21,1,0,0,1,"VMC",null,1800,0,"","COR SADM 052100Z 14004KT 9999 OVC018 15/13 Q1010",0,0,0,1,0,0],[5,22,0,0,0,0,"VMC",null,1200,0,"","SADM 052200Z 14004KT 9999 OVC012 15/13 Q1009",0,0,0,0,0,0],[5,23,0,0,0,0,"VMC",null,1400,0,"","SADM 052300Z 14003KT 9999 OVC014 15/13 Q1010",0,0,0,0,0,0],[6,0,0,0,0,0,"VMC",null,1400,0,"","SADM 060000Z 14002KT 9999 OVC014 15/13 Q1009",0,0,0,0,0,0],[6,1,0,0,0,0,"VMC",null,1600,0,"","SADM 060100Z 14003KT 9999 OVC016 15/13 Q1009",0,0,0,0,0,0],[6,2,0,0,0,0,"VMC",null,1400,0,"","SADM 060200Z 09006KT 9999 OVC014 15/13 Q1008",0,0,0,0,0,0],[6,3,0,0,0,0,"VMC",null,1400,0,"","SADM 060300Z 05004KT 9999 OVC014 15/13 Q1008",0,0,0,0,0,0],[6,4,0,0,0,0,"VMC",null,1300,0,"","SADM 060400Z 05002KT 9999 OVC013 15/13 Q1008",0,0,0,0,0,0],[6,5,0,0,0,0,"VMC",null,1200,0,"","SADM 060500Z 07002KT 9999 OVC012 15/12 Q1007",0,0,0,0,0,0],[6,6,0,0,0,0,"IMC",null,900,0,"techo 900 ft","SADM 060600Z 05005KT 9999 OVC009 14/13 Q1006",0,0,0,0,0,0],[6,7,0,0,0,0,"VMC",null,1400,0,"","SADM 060700Z 07003KT 9999 OVC014 14/13 Q1005",0,0,0,0,0,0],[6,8,0,0,0,0,"VMC",null,1100,0,"","SADM 060800Z 07004KT 9999 OVC011 14/12 Q1005",0,0,0,0,0,0],[6,9,0,0,0,0,"IMC",9000,400,1,"techo 400 ft","SADM 060900Z 09004KT 9999 OVC005 14/13 Q1004",0,0,0,0,0,0],[6,10,0,0,0,0,"IMC",3000,400,0,"vis 3000 m + techo 400 ft","SADM 061000Z 14004KT 3000 -TSRA BKN004 FEW050CB 14/13 Q1004",0,0,0,0,0,0],[6,11,0,0,0,0,"IMC",1000,600,1,"vis 1000 m + techo 600 ft","SADM 061100Z 09006KT 3000 -TSRA BKN006 FEW050CB 14/13 Q1002",1,0,0,0,0,0],[6,12,0,0,0,0,"IMC",1000,300,0,"vis 1000 m + techo 300 ft","SADM 061200Z 09005KT 1000 TSRA BKN003 FEW045CB 14/13 Q1003",1,0,0,0,0,0],[6,13,0,0,0,0,"IMC",1000,400,0,"vis 1000 m + techo 400 ft","COR SADM 061300Z 07006KT 1000 TSRA BKN004 FEW045CB 14/13 Q1001",1,0,0,0,0,0],[6,14,0,0,0,0,"IMC",1000,400,0,"vis 1000 m + techo 400 ft","SADM 061400Z 23007KT 1000 TSRA BKN004 FEW040CB 14/14 Q1001",1,0,0,0,0,0],[6,15,0,0,0,0,"IMC",1500,5000,1,"vis 1500 m","SADM 061500Z 14005KT 1500 TSRA SCT009 FEW040CB OVC050 14/13 Q1001",1,0,0,0,0,0],[6,16,0,0,0,0,"VMC",null,2100,0,"","SADM 061600Z 18011KT 9999 SCT008 BKN021 OVC100 13/11 Q1002",1,0,0,0,0,0],[6,17,0,0,0,0,"IMC",9000,800,0,"techo 800 ft","SADM 061700Z 20016KT 9000 -RA OVC008 13/12 Q1001",1,0,0,0,0,0],[6,18,0,0,0,0,"IMC",null,900,0,"techo 900 ft","COR SADM 061800Z 20009KT 9999 BKN009 OVC100 13/11 Q1002",1,0,0,0,0,0],[6,19,1,0,0,1,"VMC",null,1400,0,"","SADM 061900Z 18012KT 9999 BKN014 OVC100 13/11 Q1001",0,0,0,1,0,0],[6,20,1,0,0,1,"IMC",500,300,1,"vis 500 m + techo 300 ft","SADM 062000Z 23011KT 9999 BKN015 OVC100 13/11 Q1003",0,0,0,1,0,0],[6,21,0,0,0,0,"IMC",3000,400,0,"vis 3000 m + techo 400 ft","SADM 062100Z 20026KT 3000 RA BKN004 OVC050 13/12 Q1006",1,0,0,0,0,0],[6,22,0,0,0,0,"IMC",8000,500,0,"techo 500 ft","SADM 062200Z 20021KT 8000 -RA BKN005 OVC050 13/12 Q1008",0,0,0,0,0,0],[6,23,0,0,0,0,"VMC",null,1900,0,"","SADM 062300Z 20016G26KT 9999 OVC019 09/06 Q1010",0,0,0,0,0,0],[7,0,0,0,0,0,"VMC",null,2500,0,"","SADM 070000Z 20015G25KT 9999 FEW010 OVC025 09/06 Q1011",0,0,0,0,0,0],[7,1,0,0,0,0,"VMC",null,3000,0,"","SADM 070100Z 20019KT 9999 OVC030 08/05 Q1012",0,0,0,0,0,0],[7,2,0,0,0,0,"VMC",null,null,0,"","SADM 070200Z 20014KT 9999 FEW012 08/05 Q1013",0,0,0,0,0,0],[7,3,0,0,0,0,"VMC",null,null,0,"","SADM 070300Z 20012KT 9999 FEW012 SCT035 07/05 Q1013",0,0,0,0,0,0],[7,4,0,0,0,0,"VMC",null,null,0,"","SADM 070400Z 20010KT CAVOK 07/05 Q1013",0,0,0,0,0,0],[7,5,0,0,0,0,"VMC",null,null,0,"","SADM 070500Z 23010KT CAVOK 06/04 Q1013",0,0,0,0,0,0],[7,6,0,0,0,0,"VMC",null,null,0,"","SADM 070600Z 23010KT CAVOK 06/04 Q1013",0,0,0,0,0,0],[7,7,0,0,0,0,"VMC",null,null,0,"","SADM 070700Z 23010KT CAVOK 05/04 Q1013",0,0,0,0,0,0],[7,8,0,0,0,0,"VMC",null,null,0,"","SADM 070800Z 25008KT CAVOK 06/04 Q1013",0,0,0,0,0,0],[7,9,0,0,0,0,"VMC",null,null,0,"","COR SADM 070900Z 25004KT CAVOK 05/02 Q1013",0,0,0,0,0,0],[7,10,0,0,0,0,"VMC",null,null,0,"","SADM 071000Z 25005KT CAVOK 04/03 Q1013",0,0,0,0,0,0],[7,11,0,0,0,1,"VMC",null,null,0,"","SADM 071100Z 24005KT CAVOK 04/03 Q1013",0,0,0,0,0,0],[7,12,9,0,0,1,"VMC",null,null,0,"","SADM 071200Z 27006KT CAVOK 05/03 Q1014",0,0,0,9,0,0],[7,13,10,1,0,1,"VMC",null,null,0,"","SADM 071300Z 28007KT CAVOK 07/04 Q1015",0,0,0,10,0,0],[7,14,16,0,0,1,"VMC",null,null,0,"","SADM 071400Z 28009KT CAVOK 10/04 Q1015",0,0,0,9,6,1],[7,15,10,0,0,1,"VMC",null,null,0,"","SADM 071500Z 27011KT CAVOK 10/04 Q1014",0,0,0,10,0,0],[7,16,16,0,0,1,"VMC",null,null,0,"","SADM 071600Z 27011KT 9999 SCT036 12/02 Q1013",0,0,0,15,0,1],[7,17,10,0,0,0,"VMC",null,null,0,"","SADM 071700Z 27012KT 9999 SCT040 12/01 Q1012",0,0,0,5,4,1],[7,18,2,0,1,0,"VMC",null,null,0,"","SADM 071800Z 29013KT 9999 FEW042 13/02 Q1010",0,0,0,2,0,0],[7,19,1,0,1,0,"VMC",null,null,0,"","SADM 071900Z 29011KT 9999 FEW042 13/01 Q1010",0,0,0,1,0,0],[7,20,20,0,1,0,"VMC",null,null,0,"","SADM 072000Z 30013KT CAVOK 13/02 Q1009",0,0,0,16,4,0],[7,21,8,0,1,0,"VMC",null,null,0,"","SADM 072100Z 34008KT CAVOK 12/03 Q1008",0,0,0,8,0,0],[7,22,0,0,0,0,"VMC",null,null,0,"","SADM 072200Z 34007KT CAVOK 10/03 Q1008",0,0,0,0,0,0],[7,23,0,0,0,0,"VMC",null,null,0,"","SADM 072300Z 36007KT CAVOK 10/03 Q1007",0,0,0,0,0,0],[8,0,0,0,0,0,"VMC",null,null,0,"","SADM 080000Z 36007KT CAVOK 09/03 Q1007",0,0,0,0,0,0],[8,1,0,0,0,0,"VMC",null,null,0,"","SADM 080100Z 36006KT CAVOK 08/03 Q1007",0,0,0,0,0,0],[8,2,0,0,0,0,"VMC",null,null,0,"","SADM 080200Z 34005KT CAVOK 08/04 Q1007",0,0,0,0,0,0],[8,3,0,0,0,0,"VMC",null,null,0,"","SADM 080300Z 34006KT CAVOK 07/04 Q1007",0,0,0,0,0,0],[8,4,0,0,0,0,"VMC",null,null,0,"","SADM 080400Z 36005KT CAVOK 07/04 Q1007",0,0,0,0,0,0],[8,5,0,0,0,0,"VMC",null,null,0,"","SADM 080500Z 36005KT CAVOK 07/04 Q1006",0,0,0,0,0,0],[8,6,0,0,0,0,"VMC",null,null,0,"","SADM 080600Z 36006KT CAVOK 07/04 Q1006",0,0,0,0,0,0],[8,7,0,0,0,0,"S/D",null,null,0,"","",0,0,0,0,0,0],[8,8,0,0,0,0,"VMC",null,null,0,"","SADM 080800Z 34009KT CAVOK 06/04 Q1006",0,0,0,0,0,0],[8,9,0,0,0,0,"VMC",null,null,0,"","SADM 080900Z 34009KT CAVOK 05/04 Q1006",0,0,0,0,0,0],[8,10,0,0,0,0,"VMC",null,null,0,"","SADM 081000Z 29006KT CAVOK 06/04 Q1006",0,0,0,0,0,0],[8,11,0,0,0,0,"VMC",null,null,0,"","SADM 081100Z 27008KT CAVOK 06/04 Q1007",0,0,0,0,0,0],[8,12,0,0,1,0,"VMC",null,null,0,"","SADM 081200Z 25009KT CAVOK 07/03 Q1008",0,0,0,0,0,0],[8,13,10,0,1,0,"VMC",null,null,0,"","SADM 081300Z 25009KT CAVOK 07/02 Q1009",0,0,0,1,0,9],[8,14,1,0,1,0,"VMC",null,null,0,"","SADM 081400Z 25011KT CAVOK 09/01 Q1009",0,0,0,1,0,0],[8,15,4,0,1,0,"VMC",null,null,0,"","SADM 081500Z 25012KT CAVOK 10/00 Q1009",0,0,0,4,0,0],[8,16,7,0,1,0,"VMC",null,null,0,"","SADM 081600Z 25012KT CAVOK 11/00 Q1009",0,0,0,7,0,0],[8,17,4,0,1,0,"VMC",null,null,0,"","SADM 081700Z 25012KT CAVOK 11/00 Q1009",0,0,0,4,0,0],[8,18,16,0,1,0,"VMC",null,null,0,"","SADM 081800Z 25015KT CAVOK 12/M02 Q1009",0,0,0,8,8,0],[8,19,15,0,1,0,"VMC",null,null,0,"","SADM 081900Z 25014KT CAVOK 14/M02 Q1009",0,0,0,15,0,0],[8,20,15,0,1,0,"VMC",null,null,0,"","SADM 082000Z 25012KT CAVOK 12/M02 Q1010",0,0,0,11,4,0],[8,21,5,0,1,0,"VMC",null,null,0,"","SADM 082100Z 23013KT CAVOK 11/M04 Q1011",0,0,0,5,0,0],[8,22,0,0,0,0,"VMC",null,null,0,"","SADM 082200Z 23007KT CAVOK 10/M02 Q1011",0,0,0,0,0,0],[8,23,0,0,0,0,"VMC",null,null,0,"","SADM 082300Z 27005KT CAVOK 09/M01 Q1013",0,0,0,0,0,0],[9,0,0,0,0,0,"VMC",null,null,0,"","SADM 090000Z 27005KT CAVOK 08/M00 Q1013",0,0,0,0,0,0],[9,1,0,0,0,0,"VMC",null,null,0,"","SADM 090100Z 29005KT CAVOK 07/00 Q1014",0,0,0,0,0,0],[9,2,0,0,0,0,"VMC",null,null,0,"","SADM 090200Z 29005KT CAVOK 07/M00 Q1015",0,0,0,0,0,0],[9,3,0,0,0,0,"VMC",null,null,0,"","SADM 090300Z 29004KT CAVOK 06/M00 Q1015",0,0,0,0,0,0],[9,4,0,0,0,0,"VMC",null,null,0,"","SADM 090400Z 32006KT CAVOK 06/M00 Q1016",0,0,0,0,0,0],[9,5,0,0,0,0,"VMC",null,null,0,"","SADM 090500Z 29007KT CAVOK 06/M01 Q1016",0,0,0,0,0,0],[9,6,0,0,0,0,"VMC",null,null,0,"","SADM 090600Z 29006KT CAVOK 05/M01 Q1016",0,0,0,0,0,0],[9,7,0,0,0,0,"VMC",null,null,0,"","SADM 090700Z 29006KT CAVOK 05/M01 Q1016",0,0,0,0,0,0],[9,8,0,0,0,0,"VMC",null,null,0,"","SADM 090800Z 29005KT CAVOK 04/M01 Q1017",0,0,0,0,0,0],[9,9,0,0,0,0,"VMC",null,null,0,"","SADM 090900Z 27005KT CAVOK 04/M02 Q1017",0,0,0,0,0,0],[9,10,0,0,0,0,"VMC",null,null,0,"","SADM 091000Z 27005KT CAVOK 04/M02 Q1018",0,0,0,0,0,0],[9,11,7,1,0,1,"VMC",null,null,0,"","SADM 091100Z 27006KT CAVOK 04/M02 Q1019",0,0,0,7,0,0],[9,12,6,1,0,1,"VMC",null,null,0,"","SADM 091200Z 24007KT CAVOK 06/M02 Q1020",0,0,0,6,0,0],[9,13,9,1,0,1,"VMC",null,null,0,"","SADM 091300Z 24008KT CAVOK 08/M02 Q1021",0,0,0,9,0,0],[9,14,7,0,0,1,"VMC",null,null,0,"","SADM 091400Z 21010KT CAVOK 10/M01 Q1022",0,0,0,5,2,0],[9,15,20,0,0,1,"VMC",null,null,0,"","SADM 091500Z 23010KT CAVOK 11/00 Q1022",0,0,0,9,10,1],[9,16,20,0,0,1,"VMC",null,null,0,"","SADM 091600Z 25009KT CAVOK 12/01 Q1023",0,0,0,10,10,0],[9,17,24,0,0,1,"VMC",null,null,0,"","SADM 091700Z 23012KT CAVOK 13/M01 Q1022",0,0,0,8,16,0],[9,18,14,0,0,1,"VMC",null,null,0,"","SADM 091800Z 20015KT 9999 FEW030 13/00 Q1023",0,0,0,14,0,0],[9,19,18,0,0,1,"VMC",null,null,0,"","SADM 091900Z 23012KT 9999 FEW030 13/M02 Q1023",0,0,0,16,2,0],[9,20,29,0,0,1,"VMC",null,null,0,"","SADM 092000Z 23013KT CAVOK 13/M02 Q1024",0,0,0,15,14,0],[9,21,5,0,0,0,"VMC",null,null,0,"","SADM 092100Z 20010KT CAVOK 11/M01 Q1025",0,0,0,5,0,0],[9,22,0,0,0,0,"VMC",null,null,0,"","SADM 092200Z 20007KT CAVOK 08/M02 Q1026",0,0,0,0,0,0],[9,23,0,0,0,0,"VMC",null,null,0,"","SADM 092300Z 20008KT CAVOK 07/M02 Q1027",0,0,0,0,0,0],[10,0,0,0,0,0,"VMC",null,null,0,"","SADM 100000Z 18008KT CAVOK 06/M01 Q1028",0,0,0,0,0,0],[10,1,0,0,0,0,"VMC",null,null,0,"","SADM 100100Z 20009KT CAVOK 05/M01 Q1028",0,0,0,0,0,0],[10,2,0,0,0,0,"VMC",null,null,0,"","SADM 100200Z 20005KT CAVOK 06/01 Q1029",0,0,0,0,0,0],[10,3,0,0,0,0,"VMC",null,null,0,"","SADM 100300Z 23004KT CAVOK 06/01 Q1032",0,0,0,0,0,0],[10,4,0,0,0,0,"VMC",null,null,0,"","SADM 100400Z 23005KT CAVOK 05/02 Q1032",0,0,0,0,0,0],[10,5,0,0,0,0,"VMC",null,null,0,"","SADM 100500Z 20005KT CAVOK 04/01 Q1033",0,0,0,0,0,0],[10,6,0,0,0,0,"VMC",null,null,0,"","SADM 100600Z 20008KT CAVOK 04/01 Q1033",0,0,0,0,0,0],[10,7,0,0,0,0,"VMC",null,null,0,"","SADM 100700Z 20009KT CAVOK 04/02 Q1033",0,0,0,0,0,0],[10,8,0,0,0,0,"VMC",null,null,0,"","SADM 100800Z 20008KT CAVOK 04/01 Q1033",0,0,0,0,0,0],[10,9,0,0,0,0,"VMC",null,null,0,"","SADM 100900Z 20005KT CAVOK 02/00 Q1033",0,0,0,0,0,0],[10,10,0,0,0,0,"VMC",5000,null,1,"","SADM 101000Z 20005KT CAVOK 02/M01 Q1034",0,0,0,0,0,0],[10,11,0,0,0,1,"IMC",3000,null,1,"vis 3000 m","SADM 101100Z 18002KT 3000 BR NSC 01/M00 Q1035",0,0,0,0,0,0],[10,12,0,0,0,1,"VMC",8000,null,0,"","SADM 101200Z 18004KT 8000 NSC 02/M00 Q1035",0,0,0,0,0,0],[10,13,1,0,0,1,"VMC",null,null,0,"","SADM 101300Z 16005KT CAVOK 05/M00 Q1036",0,0,0,1,0,0],[10,14,1,0,0,1,"VMC",null,null,0,"","SADM 101400Z 14005KT CAVOK 07/M01 Q1036",0,0,0,1,0,0],[10,15,2,1,0,1,"VMC",null,null,0,"","SADM 101500Z 14008KT CAVOK 10/M01 Q1036",0,0,0,2,0,0],[10,16,11,0,0,1,"VMC",null,null,0,"","SADM 101600Z 14007KT CAVOK 11/M00 Q1036",0,0,0,3,8,0],[10,17,13,0,0,1,"VMC",null,null,0,"","SADM 101700Z 16006KT CAVOK 11/M00 Q1035",0,0,0,13,0,0],[10,18,27,0,0,1,"VMC",null,null,0,"","SADM 101800Z 16005KT CAVOK 12/M00 Q1034",0,0,0,21,6,0],[10,19,52,0,0,1,"VMC",null,null,0,"","SADM 101900Z 16005KT CAVOK 12/M01 Q1034",0,0,0,30,22,0],[10,20,32,0,0,1,"VMC",null,null,0,"","SADM 102000Z 14006KT CAVOK 12/M01 Q1033",0,0,0,26,6,0],[10,21,9,0,0,1,"VMC",null,null,0,"","SADM 102100Z 14006KT CAVOK 11/M01 Q1034",0,0,0,9,0,0],[10,22,0,0,0,0,"VMC",null,null,0,"","SADM 102200Z 09004KT CAVOK 10/01 Q1034",0,0,0,0,0,0],[10,23,0,0,0,0,"VMC",null,null,0,"","SADM 102300Z 09004KT CAVOK 10/02 Q1034",0,0,0,0,0,0],[11,0,0,0,0,0,"VMC",null,null,0,"","SADM 110000Z 09002KT CAVOK 09/04 Q1034",0,0,0,0,0,0],[11,1,0,0,0,0,"VMC",null,null,0,"","SADM 110100Z 14001KT CAVOK 08/04 Q1034",0,0,0,0,0,0],[11,2,0,0,0,0,"VMC",null,null,0,"","SADM 110200Z 14002KT CAVOK 08/05 Q1035",0,0,0,0,0,0],[11,3,0,0,0,0,"VMC",null,null,0,"","SADM 110300Z 14003KT CAVOK 08/05 Q1034",0,0,0,0,0,0],[11,4,0,0,0,0,"VMC",null,null,0,"","SADM 110400Z 14003KT CAVOK 07/04 Q1035",0,0,0,0,0,0],[11,5,0,0,0,0,"VMC",null,null,0,"","SADM 110500Z 14004KT CAVOK 07/03 Q1034",0,0,0,0,0,0],[11,6,0,0,0,0,"VMC",null,null,0,"","SADM 110600Z 09002KT 9999 FEW030 SCT200 07/03 Q1034",0,0,0,0,0,0],[11,7,0,0,0,0,"S/D",null,null,0,"","",0,0,0,0,0,0],[11,8,0,0,0,0,"VMC",null,20000,0,"","SADM 110800Z 14002KT 9999 SCT030 BKN200 06/03 Q1033",0,0,0,0,0,0],[11,9,0,0,0,0,"VMC",null,3000,0,"","SADM 110900Z 14002KT 9999 BKN030 06/04 Q1033",0,0,0,0,0,0],[11,10,0,0,0,0,"VMC",null,3000,0,"","SADM 111000Z 14004KT 9999 BKN030 06/04 Q1033",0,0,0,0,0,0],[11,11,6,0,0,1,"VMC",9000,3000,0,"","SADM 111100Z 11003KT 9000 BKN030 BKN200 07/02 Q1033",0,0,0,6,0,0],[11,12,20,0,0,1,"VMC",9000,3200,0,"","SADM 111200Z 11004KT 9000 BKN032 BKN200 07/02 Q1033",0,0,0,20,0,0],[11,13,38,0,0,1,"VMC",6000,2900,0,"","SADM 111300Z 13006KT 6000 BKN029 BKN200 08/02 Q1033",0,0,0,24,14,0],[11,14,37,0,0,1,"VMC",6000,2900,0,"","SADM 111400Z 10006KT 6000 OVC029 09/03 Q1033",0,0,0,32,4,1],[11,15,30,1,0,1,"VMC",9000,2600,0,"","SADM 111500Z 09007KT 9000 OVC026 10/03 Q1032",0,0,0,24,6,0],[11,16,30,0,0,1,"VMC",null,2800,0,"","COR SADM 111600Z 09006KT 9999 BKN028 10/04 Q1032",0,0,0,26,4,0],[11,17,39,0,1,1,"VMC",null,3000,0,"","SADM 111700Z 07008KT 9999 BKN030 11/03 Q1031",0,0,0,29,10,0],[11,18,43,0,1,0,"VMC",null,2800,0,"","SADM 111800Z 09009KT 9999 BKN028 11/04 Q1029",0,0,0,29,14,0],[11,19,27,0,1,0,"VMC",9000,20000,0,"","SADM 111900Z 07008KT 9000 SCT028 BKN200 11/03 Q1029",0,0,0,25,2,0],[11,20,39,0,1,0,"VMC",9000,20000,0,"","SADM 112000Z 09006KT 9000 SCT030 OVC200 11/03 Q1029",0,0,0,35,4,0],[11,21,14,0,1,0,"VMC",null,20000,0,"","SADM 112100Z 11007KT 9999 FEW028 OVC200 10/03 Q1028",0,0,0,12,2,0],[11,22,0,0,0,0,"VMC",null,20000,0,"","SADM 112200Z 09008KT 9999 FEW028 BKN200 09/02 Q1028",0,0,0,0,0,0],[11,23,0,0,0,0,"VMC",null,null,0,"","SADM 112300Z 11007KT 9999 SCT024 SCT200 09/03 Q1028",0,0,0,0,0,0],[12,0,0,0,0,0,"VMC",null,2200,0,"","SADM 120000Z 11006KT 9999 BKN022 09/03 Q1028",0,0,0,0,0,0],[12,1,0,0,0,0,"VMC",null,null,0,"","SADM 120100Z 11006KT 9999 SCT025 08/03 Q1027",0,0,0,0,0,0],[12,2,0,0,0,0,"VMC",null,null,0,"","SADM 120200Z 14006KT 9999 SCT025 08/04 Q1027",0,0,0,0,0,0],[12,3,0,0,0,0,"VMC",null,1900,0,"","SADM 120300Z 13005KT 9999 BKN019 07/04 Q1027",0,0,0,0,0,0],[12,4,0,0,0,0,"VMC",null,1900,0,"","SADM 120400Z 13004KT 9999 OVC019 08/04 Q1027",0,0,0,0,0,0],[12,5,0,0,0,0,"VMC",null,1900,0,"","SADM 120500Z 09003KT 9999 BKN019 OVC200 09/03 Q1026",0,0,0,0,0,0],[12,6,0,0,0,0,"VMC",null,1900,0,"","SADM 120600Z 07008KT 9999 BKN019 OVC200 09/06 Q1025",0,0,0,0,0,0],[12,7,0,0,0,0,"VMC",null,1900,0,"","SADM 120700Z 09007KT 9999 BKN019 OVC200 10/06 Q1025",0,0,0,0,0,0],[12,8,0,0,0,0,"VMC",null,20000,0,"","SADM 120800Z 09006KT 9999 FEW019 OVC200 09/06 Q1024",0,0,0,0,0,0],[12,9,0,0,0,0,"VMC",null,1900,0,"","SADM 120900Z 09005KT 9999 BKN019 OVC200 09/06 Q1024",0,0,0,0,0,0],[12,10,0,0,0,0,"VMC",null,20000,0,"","SADM 121000Z 11004KT 9999 FEW019 OVC200 09/06 Q1023",0,0,0,0,0,0],[12,11,4,0,0,1,"VMC",null,null,0,"","SADM 121100Z 11006KT CAVOK 09/06 Q1023",0,0,0,4,0,0],[12,12,31,0,0,1,"VMC",null,null,0,"","SADM 121200Z 11004KT CAVOK 08/05 Q1023",0,0,0,12,18,1],[12,13,15,0,0,1,"VMC",null,1700,0,"","SADM 121300Z 14008KT 9999 BKN017 SCT100 OVC200 09/06 Q1023",0,0,0,15,0,0],[12,14,37,0,0,1,"VMC",null,2000,0,"","SADM 121400Z 14007KT 9999 BKN020 OVC200 10/06 Q1023",0,0,0,18,18,1],[12,15,23,0,0,1,"VMC",null,2000,0,"","SADM 121500Z 11008KT 9999 OVC020 11/07 Q1023",0,0,0,21,2,0],[12,16,35,0,0,1,"VMC",null,1800,0,"","SADM 121600Z 16009KT 9999 OVC018 11/07 Q1023",0,0,0,19,16,0],[12,17,46,0,0,1,"VMC",null,2200,0,"","SADM 121700Z 16009KT 9999 OVC022 11/07 Q1022",0,0,0,18,28,0],[12,18,32,0,0,1,"VMC",null,1700,0,"","SADM 121800Z 14010KT 9999 BKN017 BKN200 12/07 Q1021",0,0,0,18,14,0],[12,19,51,0,0,1,"VMC",null,1900,0,"","SADM 121900Z 14011KT 9999 OVC019 11/07 Q1020",0,0,0,25,26,0],[12,20,31,0,0,1,"VMC",null,2500,0,"","SADM 122000Z 14009KT 9999 BKN025 OVC200 11/07 Q1020",0,0,0,13,18,0],[12,21,23,0,0,1,"VMC",null,1700,0,"","SADM 122100Z 14009KT 9999 BKN017 BKN200 10/07 Q1021",0,0,0,7,16,0],[12,22,0,0,0,0,"VMC",null,1900,0,"","SADM 122200Z 14009KT 9999 OVC019 11/07 Q1021",0,0,0,0,0,0],[12,23,0,0,0,0,"VMC",null,1700,0,"","SADM 122300Z 14011KT 9999 OVC017 09/06 Q1021",0,0,0,0,0,0],[13,0,0,0,0,0,"VMC",null,1500,0,"","SADM 130000Z 14010KT 9999 OVC015 09/06 Q1023",0,0,0,0,0,0],[13,1,0,0,0,0,"VMC",null,1500,0,"","SADM 130100Z 14008KT 9999 OVC015 09/06 Q1023",0,0,0,0,0,0],[13,2,0,0,0,0,"VMC",null,1600,0,"","SADM 130200Z 14010KT 9999 OVC016 09/06 Q1023",0,0,0,0,0,0],[13,3,0,0,0,0,"VMC",null,1600,0,"","SADM 130300Z 14011KT 9999 OVC016 08/06 Q1023",0,0,0,0,0,0],[13,4,0,0,0,0,"VMC",null,1500,0,"","SADM 130400Z 14010KT 9999 OVC015 08/05 Q1023",0,0,0,0,0,0],[13,5,0,0,0,0,"VMC",null,1500,0,"","SADM 130500Z 14007KT 9999 OVC015 08/05 Q1023",0,0,0,0,0,0],[13,6,0,0,0,0,"VMC",null,1600,0,"","SADM 130600Z 14010KT 9999 OVC016 08/05 Q1023",0,0,0,0,0,0],[13,7,0,0,0,0,"VMC",null,1600,0,"","SADM 130700Z 14009KT 9999 OVC016 08/05 Q1023",0,0,0,0,0,0],[13,8,0,0,0,0,"VMC",null,1800,0,"","SADM 130800Z 14007KT 9999 OVC018 08/06 Q1023",0,0,0,0,0,0],[13,9,0,0,0,0,"VMC",null,2000,0,"","SADM 130900Z 14008KT 9999 OVC020 08/06 Q1023",0,0,0,0,0,0],[13,10,0,0,0,0,"VMC",null,2000,0,"","SADM 131000Z 14009KT 9999 OVC020 08/06 Q1023",0,0,0,0,0,0],[13,11,4,0,0,1,"VMC",null,2500,0,"","SADM 131100Z 14006KT 9999 OVC025 08/04 Q1025",0,0,0,4,0,0],[13,12,12,0,0,1,"VMC",null,2600,0,"","SADM 131200Z 16008KT 9999 OVC026 07/05 Q1026",0,0,0,8,4,0],[13,13,13,0,0,1,"VMC",null,2700,0,"","SADM 131300Z 16006KT 9999 OVC027 08/02 Q1026",0,0,0,12,1,0],[13,14,15,0,0,1,"VMC",null,2200,0,"","SADM 131400Z 14007KT 9999 BKN022 OVC100 09/04 Q1026",0,0,0,15,0,0],[13,15,49,0,0,1,"VMC",null,2000,0,"","SADM 131500Z 14008KT 9999 OVC020 09/05 Q1026",0,0,0,21,28,0],[13,16,19,0,0,1,"VMC",null,2100,0,"","SADM 131600Z 14009KT 9999 OVC021 10/05 Q1025",0,0,0,17,2,0],[13,17,26,0,0,1,"VMC",null,2400,0,"","SADM 131700Z 14008KT 9999 OVC024 10/05 Q1025",0,0,0,22,4,0],[13,18,24,0,0,1,"VMC",null,2300,0,"","SADM 131800Z 14008KT 9999 OVC023 10/05 Q1025",0,0,0,20,4,0],[13,19,24,0,0,1,"VMC",null,2200,0,"","SADM 131900Z 14006KT 9999 BKN022 OVC100 10/06 Q1025",0,0,0,24,0,0],[13,20,19,0,0,1,"VMC",8000,10000,0,"","SADM 132000Z 14007KT 8000 FEW019 OVC100 10/06 Q1026",0,0,0,17,2,0],[13,21,4,0,0,1,"IMC",3000,5000,1,"vis 3000 m","SADM 132100Z 14007KT 5000 -RA BR FEW018 OVC100 10/06 Q1026",0,0,0,2,2,0],[13,22,0,0,0,0,"IMC",3000,5000,0,"vis 3000 m","SADM 132200Z 14005KT 3000 -RA BR SCT037 OVC050 10/07 Q1026",0,0,0,0,0,0],[13,23,0,0,0,0,"VMC",5000,10000,0,"","SADM 132300Z 14005KT 5000 BR FEW015 OVC100 10/07 Q1026",0,0,0,0,0,0],[14,0,0,0,0,0,"VMC",5000,10000,0,"","SADM 140000Z 11005KT 5000 -RA BR FEW015 OVC100 10/07 Q1026",0,0,0,0,0,0],[14,1,0,0,0,0,"VMC",8000,10000,0,"","SADM 140100Z 11005KT 8000 FEW015 OVC100 10/07 Q1026",0,0,0,0,0,0],[14,2,0,0,0,0,"VMC",8000,10000,0,"","SADM 140200Z 09003KT 8000 FEW019 OVC100 10/08 Q1026",0,0,0,0,0,0],[14,3,0,0,0,0,"VMC",8000,10000,0,"","SADM 140300Z 11002KT 8000 FEW018 OVC100 10/07 Q1026",0,0,0,0,0,0],[14,4,0,0,0,0,"VMC",8000,null,0,"","SADM 140400Z 11004KT 8000 NSC 10/07 Q1026",0,0,0,0,0,0],[14,5,0,0,0,0,"VMC",8000,10000,0,"","SADM 140500Z 14006KT 8000 SCT035 OVC100 10/08 Q1025",0,0,0,0,0,0],[14,6,0,0,0,0,"VMC",8000,4900,0,"","SADM 140600Z 09002KT 8000 BKN049 OVC100 10/08 Q1025",0,0,0,0,0,0],[14,7,0,0,0,0,"IMC",4000,1000,0,"vis 4000 m","SADM 140700Z 09002KT 4000 -DZ BR BKN010 OVC100 10/08 Q1025",0,0,0,0,0,0],[14,8,0,0,0,0,"IMC",2500,1000,0,"vis 2500 m","SADM 140800Z 05004KT 2500 -DZ BR BKN010 OVC100 10/08 Q1025",0,0,0,0,0,0],[14,9,0,0,0,0,"IMC",4000,1000,0,"vis 4000 m","SADM 140900Z 09004KT 4000 BR BKN010 OVC020 10/09 Q1025",0,0,0,0,0,0],[14,10,0,0,0,0,"IMC",4000,1000,0,"vis 4000 m","SADM 141000Z 07004KT 4000 BR BKN010 OVC028 11/08 Q1025",0,0,0,0,0,0],[14,11,0,0,0,0,"IMC",4000,800,0,"vis 4000 m + techo 800 ft","SADM 141100Z 07006KT 4000 -DZ BKN008 OVC014 11/09 Q1025",1,0,0,0,0,0],[14,12,0,0,0,0,"IMC",3000,700,0,"vis 3000 m + techo 700 ft","SADM 141200Z 07007KT 3000 -DZ OVC007 11/09 Q1025",1,0,0,0,0,0],[14,13,0,0,0,0,"IMC",3000,700,0,"vis 3000 m + techo 700 ft","SADM 141300Z 07007KT 3000 -DZ OVC007 11/10 Q1025",1,0,0,0,0,0],[14,14,0,0,0,0,"IMC",2000,800,0,"vis 2000 m + techo 800 ft","SADM 141400Z 07008KT 2000 DZ BR OVC008 11/10 Q1025",1,0,0,0,0,0],[14,15,0,0,0,0,"IMC",3000,800,0,"vis 3000 m + techo 800 ft","SADM 141500Z 07007KT 3000 -DZ BR OVC008 12/10 Q1024",1,0,0,0,0,0],[14,16,0,0,0,0,"IMC",2000,800,0,"vis 2000 m + techo 800 ft","SADM 141600Z 05006KT 2000 DZ BR OVC008 12/11 Q1024",1,0,0,0,0,0],[14,17,0,0,0,0,"IMC",3000,800,0,"vis 3000 m + techo 800 ft","SADM 141700Z 05005KT 3000 -DZ BR OVC008 12/11 Q1023",1,0,0,0,0,0],[14,18,0,0,0,0,"IMC",2000,400,0,"vis 2000 m + techo 400 ft","SADM 141800Z 07005KT 2000 -DZ BR OVC004 12/11 Q1022",1,0,0,0,0,0],[14,19,0,0,0,0,"IMC",2000,600,0,"vis 2000 m + techo 600 ft","SADM 141900Z 07004KT 2000 -DZ BR BKN006 OVC012 12/12 Q1022",1,0,0,0,0,0],[14,20,0,0,0,0,"IMC",2000,400,0,"vis 2000 m + techo 400 ft","SADM 142000Z 09005KT 2000 -DZ BR OVC004 12/11 Q1022",1,0,0,0,0,0],[14,21,0,0,0,0,"IMC",2000,800,0,"vis 2000 m + techo 800 ft","SADM 142100Z 09005KT 2000 -DZ BR OVC008 12/11 Q1022",1,0,0,0,0,0],[14,22,0,0,0,0,"IMC",4000,600,0,"vis 4000 m + techo 600 ft","SADM 142200Z 09006KT 4000 BR OVC006 12/12 Q1021",0,0,0,0,0,0],[14,23,0,0,0,0,"VMC",null,null,0,"","SADM 142300Z 09004KT 9999 FEW007 SCT023 13/10 Q1022",0,0,0,0,0,0],[15,0,0,0,0,0,"VMC",null,2600,0,"","SADM 150000Z 07003KT 9999 OVC026 12/11 Q1022",0,0,0,0,0,0],[15,1,0,0,0,0,"VMC",null,null,0,"","SADM 150100Z 09005KT 9999 SCT041 13/11 Q1021",0,0,0,0,0,0],[15,2,0,0,0,0,"VMC",null,4000,0,"","SADM 150200Z 09005KT 9999 OVC040 12/11 Q1021",0,0,0,0,0,0],[15,3,0,0,0,0,"VMC",null,4700,0,"","SADM 150300Z 09003KT 9999 BKN047 13/12 Q1021",0,0,0,0,0,0],[15,4,0,0,0,0,"VMC",null,3800,0,"","SADM 150400Z 09004KT 9999 BKN038 13/12 Q1021",0,0,0,0,0,0],[15,5,0,0,0,0,"VMC",null,3600,0,"","SADM 150500Z 07006KT 9999 OVC036 14/11 Q1021",0,0,0,0,0,0],[15,6,0,0,0,0,"VMC",null,null,0,"","SADM 150600Z 07010G20KT 9999 FEW037 14/11 Q1020",0,0,0,0,0,0],[15,7,0,0,0,0,"VMC",null,1400,0,"","SADM 150700Z 07009KT 9999 OVC014 14/11 Q1019",0,0,0,0,0,0],[15,8,0,0,0,0,"VMC",null,1000,0,"","SADM 150800Z 05008KT 9999 OVC010 14/11 Q1019",0,0,0,0,0,0],[15,9,0,0,0,0,"VMC",null,1000,0,"","SADM 150900Z 05007KT 9999 OVC010 13/11 Q1018",0,0,0,0,0,0],[15,10,0,0,0,0,"VMC",null,1400,0,"","SADM 151000Z 07007KT 9999 OVC014 14/11 Q1018",0,0,0,0,0,0],[15,11,1,0,1,0,"VMC",null,1200,0,"","SADM 151100Z 05006KT 9999 OVC012 14/11 Q1019",0,0,0,1,0,0],[15,12,0,0,0,0,"IMC",null,800,0,"techo 800 ft","SADM 151200Z 09005KT 9999 BKN008 OVC012 14/12 Q1018",1,0,0,0,0,0],[15,13,0,0,0,0,"IMC",null,800,0,"techo 800 ft","SADM 151300Z 05005KT 9999 BKN008 OVC012 14/12 Q1018",1,0,0,0,0,0],[15,14,0,0,0,0,"IMC",null,800,0,"techo 800 ft","SADM 151400Z 05007KT 9999 BKN008 OVC012 14/12 Q1017",1,0,0,0,0,0],[15,15,0,0,0,0,"IMC",null,800,0,"techo 800 ft","SADM 151500Z 05008KT 9999 BKN008 OVC012 15/12 Q1017",1,0,0,0,0,0],[15,16,3,0,1,0,"VMC",null,1000,0,"","SADM 151600Z 05009KT 9999 BKN010 OVC012 15/12 Q1016",0,0,0,3,0,0],[15,17,1,0,1,0,"IMC",null,800,1,"techo 800 ft","SADM 151700Z 05005KT 9999 BKN010 OVC012 15/13 Q1014",0,0,0,1,0,0],[15,18,0,0,0,0,"IMC",4000,800,0,"vis 4000 m + techo 800 ft","SADM 151800Z 05004KT 4000 OVC008 15/13 Q1014",1,0,0,0,0,0],[15,19,0,0,0,0,"IMC",4000,800,0,"vis 4000 m + techo 800 ft","SADM 151900Z 09003KT 4000 BR BKN008 OVC012 14/13 Q1013",1,0,0,0,0,0],[15,20,0,0,0,0,"IMC",4000,800,0,"vis 4000 m + techo 800 ft","SADM 152000Z 05004KT 4000 BR BKN008 OVC012 14/13 Q1012",1,0,0,0,0,0],[15,21,0,0,0,0,"IMC",3000,800,0,"vis 3000 m + techo 800 ft","SADM 152100Z 05004KT 3000 -DZBR OVC008 14/13 Q1012",1,0,0,0,0,0],[15,22,0,0,0,0,"IMC",4000,700,0,"vis 4000 m + techo 700 ft","SADM 152200Z 09002KT 4000 BR OVC007 14/13 Q1012",0,0,0,0,0,0],[15,23,0,0,0,0,"IMC",4000,600,0,"vis 4000 m + techo 600 ft","SADM 152300Z 09005KT 4000 -DZBR OVC006 15/14 Q1012",0,0,0,0,0,0],[16,0,0,0,0,0,"IMC",4000,1200,0,"vis 4000 m","SADM 160000Z 09001KT 4000 -DZBR OVC012 15/14 Q1013",0,0,0,0,0,0],[16,1,0,0,0,0,"IMC",3000,800,0,"vis 3000 m + techo 800 ft","SADM 160100Z 05001KT 3000 -DZBR OVC008 15/15 Q1013",0,0,0,0,0,0],[16,2,0,0,0,0,"VMC",5000,1000,0,"","SADM 160200Z 02004KT 5000 BR OVC010 15/15 Q1013",0,0,0,0,0,0],[16,3,0,0,0,0,"VMC",9000,1400,0,"","SADM 160300Z 02003KT 9000 BKN014 OVC100 15/14 Q1012",0,0,0,0,0,0],[16,4,0,0,0,0,"VMC",9000,10000,0,"","SADM 160400Z 02005KT 9000 SCT014 OVC100 15/14 Q1012",0,0,0,0,0,0],[16,5,0,0,0,0,"VMC",9000,3800,0,"","SADM 160500Z 36007KT 9000 SCT005 OVC038 15/14 Q1012",0,0,0,0,0,0],[16,6,0,0,0,0,"VMC",9000,3000,0,"","SADM 160600Z 32006KT 9000 SCT005 OVC030 15/14 Q1013",0,0,0,0,0,0],[16,7,0,0,0,0,"VMC",9000,4000,0,"","SADM 160700Z 32004KT 9000 FEW006 OVC040 14/14 Q1012",0,0,0,0,0,0],[16,8,0,0,0,0,"VMC",9000,20000,0,"","SADM 160800Z 32002KT 9000 SCT040 BKN200 14/13 Q1012",0,0,0,0,0,0],[16,9,0,0,0,0,"VMC",9000,20000,0,"","SADM 160900Z 34003KT 9000 FEW009 BKN200 14/13 Q1011",0,0,0,0,0,0],[16,10,0,0,0,0,"IMC",5000,700,0,"techo 700 ft","SADM 161000Z 34002KT 5000 BR OVC007 13/13 Q1010",0,0,0,0,0,0],[16,11,0,0,0,0,"IMC",3000,600,0,"vis 3000 m + techo 600 ft","SADM 161100Z 32002KT 3000 BR OVC006 13/13 Q1011",1,0,0,0,0,0],[16,12,0,0,0,0,"IMC",4000,500,0,"vis 4000 m + techo 500 ft","SADM 161200Z 29004KT 4000 BR OVC005 14/13 Q1012",1,0,0,0,0,0],[16,13,0,0,0,0,"IMC",5000,500,0,"techo 500 ft","SADM 161300Z 29004KT 5000 BR BKN005 OVC035 14/13 Q1011",1,0,0,0,0,0],[16,14,1,0,0,1,"VMC",null,null,0,"","SADM 161400Z 32002KT 9999 SCT040 15/13 Q1011",0,0,0,1,0,0],[16,15,23,0,0,1,"VMC",null,10000,0,"","SADM 161500Z 23004KT 9999 FEW012 SCT040 BKN100 16/13 Q1011",0,0,0,9,14,0],[16,16,19,0,0,1,"VMC",null,4000,0,"","SADM 161600Z 27003KT 9999 BKN040 OVC100 17/14 Q1011",0,0,0,19,0,0],[16,17,17,0,0,1,"VMC",null,4000,0,"","SADM 161700Z 27007KT 9999 BKN040 OVC100 16/15 Q1011",0,0,0,15,2,0],[16,18,31,0,0,1,"VMC",null,3500,0,"","SADM 161800Z 20005KT 9999 BKN035 OVC100 16/13 Q1010",0,0,0,15,16,0],[16,19,22,0,0,1,"VMC",null,3500,0,"","SADM 161900Z 23007KT 9999 SCT018 BKN035 OVC100 16/13 Q1010",0,0,0,16,6,0],[16,20,44,0,0,1,"VMC",null,10000,0,"","SADM 162000Z 20010KT 9999 SCT015 BKN100 17/13 Q1010",0,0,0,12,32,0],[16,21,13,0,0,1,"VMC",null,10000,0,"","SADM 162100Z 20006KT 9999 SCT018 BKN100 16/13 Q1010",0,0,0,5,8,0],[16,22,0,0,0,0,"VMC",null,null,0,"","SADM 162200Z 20006KT 9999 SCT035 14/11 Q1011",0,0,0,0,0,0],[16,23,0,0,0,0,"IMC",3500,2800,0,"vis 3500 m","SADM 162300Z 18003KT 3500 FU OVC028 15/13 Q1012",0,0,0,0,0,0],[17,0,0,0,0,0,"VMC",null,3100,0,"","SADM 170000Z 14004KT 9999 OVC031 16/13 Q1013",0,0,0,0,0,0],[17,1,0,0,0,0,"VMC",null,null,0,"","SADM 170100Z 14004KT CAVOK 16/13 Q1014",0,0,0,0,0,0],[17,2,0,0,0,0,"VMC",null,2800,0,"","SADM 170200Z 14004KT 9999 BKN028 15/13 Q1014",0,0,0,0,0,0],[17,3,0,0,0,0,"VMC",null,2900,0,"","SADM 170300Z 12002KT 9999 OVC029 15/13 Q1015",0,0,0,0,0,0],[17,4,0,0,0,0,"VMC",null,2600,0,"","SADM 170400Z 20007KT 9999 OVC026 14/13 Q1015",0,0,0,0,0,0],[17,5,0,0,0,0,"VMC",null,3100,0,"","SADM 170500Z 14007KT 9999 BKN031 14/12 Q1015",0,0,0,0,0,0],[17,6,0,0,0,0,"VMC",null,10000,0,"","SADM 170600Z 16006KT 9999 FEW031 BKN100 14/12 Q1015",0,0,0,0,0,0],[17,7,0,0,0,0,"VMC",null,10000,0,"","SADM 170700Z 18010KT 9999 FEW012 BKN100 BKN200 14/12 Q1014",0,0,0,0,0,0],[17,8,0,0,0,0,"VMC",null,20000,0,"","SADM 170800Z 11011KT 9999 FEW012 SCT100 BKN200 13/12 Q1013",0,0,0,0,0,0],[17,9,0,0,0,0,"VMC",null,null,0,"","SADM 170900Z 14008KT CAVOK 13/11 Q1014",0,0,0,0,0,0],[17,10,0,0,0,0,"VMC",null,1100,0,"","SADM 171000Z 14013KT 9999 OVC011 12/11 Q1016",0,0,0,0,0,0],[17,11,8,0,0,1,"VMC",null,1300,0,"","SADM 171100Z 14010KT 9999 OVC013 11/10 Q1016",0,0,0,6,2,0],[17,12,53,0,0,1,"VMC",null,1300,0,"","SADM 171200Z 14010KT 9999 OVC013 12/09 Q1017",0,0,0,11,42,0],[17,13,17,0,0,1,"VMC",null,1000,0,"","SADM 171300Z 16010KT 9999 OVC010 12/09 Q1018",0,0,0,5,12,0],[17,14,34,0,0,1,"VMC",null,1000,0,"","SADM 171400Z 16010KT 9999 OVC010 13/10 Q1018",0,0,0,12,22,0],[17,15,30,0,0,1,"VMC",null,1000,0,"","COR SADM 171500Z 14013KT 9999 OVC010 12/10 Q1018",0,0,0,17,12,1],[17,16,43,0,0,1,"VMC",null,1400,0,"","SADM 171600Z 14011KT 9999 OVC014 12/09 Q1018",0,0,0,18,24,1],[17,17,37,0,0,1,"VMC",null,1900,0,"","SADM 171700Z 14010KT 9999 OVC019 11/09 Q1017",0,0,0,17,20,0],[17,18,31,0,0,1,"VMC",null,1700,0,"","SADM 171800Z 16013KT 9999 OVC017 11/09 Q1016",0,0,0,19,12,0],[17,19,20,0,0,1,"VMC",null,1900,0,"","SADM 171900Z 16011KT 9999 OVC019 12/09 Q1018",0,0,0,16,4,0],[17,20,55,0,0,1,"VMC",null,1900,0,"","SADM 172000Z 14011KT 9999 OVC019 12/08 Q1019",0,0,0,21,34,0],[17,21,3,0,0,0,"VMC",null,2400,0,"","SADM 172100Z 16011KT 9999 OVC024 12/09 Q1018",0,0,0,3,0,0],[17,22,0,0,0,0,"VMC",null,2100,0,"","SADM 172200Z 16013KT 9999 OVC021 12/08 Q1018",0,0,0,0,0,0],[17,23,0,0,0,0,"VMC",null,1900,0,"","SADM 172300Z 16014KT 9999 OVC019 12/08 Q1019",0,0,0,0,0,0],[18,0,0,0,0,0,"VMC",null,2100,0,"","SADM 180000Z 14014KT 9999 OVC021 12/07 Q1019",0,0,0,0,0,0],[18,1,0,0,0,0,"VMC",null,1800,0,"","SADM 180100Z 14014KT 9999 OVC018 11/06 Q1021",0,0,0,0,0,0],[18,2,0,0,0,0,"VMC",null,1400,0,"","SADM 180200Z 16016KT 9999 BKN014 OVC019 10/07 Q1020",0,0,0,0,0,0],[18,3,0,0,0,0,"VMC",null,1200,0,"","SADM 180300Z 16013KT 9999 OVC012 09/06 Q1020",0,0,0,0,0,0],[18,4,0,0,0,0,"VMC",null,1200,0,"","SADM 180400Z 16014KT 9999 OVC012 09/06 Q1020",0,0,0,0,0,0],[18,5,0,0,0,0,"VMC",null,1200,0,"","SADM 180500Z 16013KT 9999 OVC012 09/05 Q1020",0,0,0,0,0,0],[18,6,0,0,0,0,"IMC",null,900,0,"techo 900 ft","SADM 180600Z 14011KT 9999 OVC009 08/05 Q1020",0,0,0,0,0,0],[18,7,0,0,0,0,"IMC",null,900,0,"techo 900 ft","SADM 180700Z 14010KT 9999 OVC009 08/06 Q1021",0,0,0,0,0,0],[18,8,0,0,0,0,"IMC",null,600,0,"techo 600 ft","SADM 180800Z 16013KT 9999 OVC006 08/06 Q1020",0,0,0,0,0,0],[18,9,0,0,0,0,"VMC",null,1200,0,"","SADM 180900Z 16013KT 9999 OVC012 08/05 Q1020",0,0,0,0,0,0],[18,10,0,0,0,0,"IMC",null,900,0,"techo 900 ft","SADM 181000Z 16011KT 9999 OVC009 08/05 Q1020",0,0,0,0,0,0],[18,11,0,0,0,0,"IMC",null,900,0,"techo 900 ft","SADM 181100Z 16008KT 9999 OVC009 08/05 Q1021",1,0,0,0,0,0],[18,12,1,0,0,1,"IMC",null,900,1,"techo 900 ft","SADM 181200Z 14011KT 9999 BKN009 OVC010 08/05 Q1022",0,0,0,1,0,0],[18,13,6,0,0,1,"VMC",null,1100,0,"","SADM 181300Z 14010KT 9999 BKN011 OVC013 08/05 Q1022",0,0,0,6,0,0],[18,14,13,0,0,1,"VMC",null,10000,0,"","SADM 181400Z 14010KT 9999 SCT014 OVC100 09/04 Q1023",0,0,0,13,0,0],[18,15,28,0,0,1,"VMC",null,10000,0,"","SADM 181500Z 14009KT 9999 SCT015 OVC100 10/05 Q1022",0,0,0,22,6,0],[18,16,35,1,0,1,"VMC",null,1800,0,"","SADM 181600Z 18008KT 9999 BKN018 OVC100 10/06 Q1023",0,0,0,23,12,0],[18,17,50,0,0,1,"VMC",null,1800,0,"","SADM 181700Z 16009KT 9999 BKN018 OVC100 11/06 Q1023",0,0,0,30,20,0],[18,18,31,0,0,1,"VMC",null,2000,0,"","SADM 181800Z 14008KT 9999 BKN020 OVC100 11/06 Q1022",0,0,0,25,6,0],[18,19,32,0,0,1,"VMC",null,2100,0,"","SADM 181900Z 14007KT 9999 BKN021 SCT100 OVC200 12/06 Q1022",0,0,0,26,6,0],[18,20,31,0,0,1,"VMC",null,20000,0,"","SADM 182000Z 14005KT 9999 SCT022 BKN200 12/06 Q1022",0,0,0,21,10,0],[18,21,4,0,0,1,"VMC",null,20000,0,"","SADM 182100Z 15008KT 9999 FEW025 FEW100 BKN200 11/05 Q1022",0,0,0,4,0,0],[18,22,0,0,0,0,"VMC",null,null,0,"","SADM 182200Z 14008KT CAVOK 11/05 Q1022",0,0,0,0,0,0],[18,23,0,0,0,0,"VMC",null,null,0,"","SADM 182300Z 14005KT CAVOK 10/06 Q1023",0,0,0,0,0,0],[19,0,0,0,0,0,"VMC",null,null,0,"","SADM 190000Z 14006KT CAVOK 10/06 Q1024",0,0,0,0,0,0],[19,1,0,0,0,0,"VMC",null,null,0,"","SADM 190100Z 12003KT CAVOK 10/06 Q1024",0,0,0,0,0,0],[19,2,0,0,0,0,"VMC",null,null,0,"","SADM 190200Z 14004KT CAVOK 10/05 Q1024",0,0,0,0,0,0],[19,3,0,0,0,0,"VMC",null,null,0,"","SADM 190300Z 12004KT CAVOK 09/06 Q1023",0,0,0,0,0,0],[19,4,0,0,0,0,"VMC",null,null,0,"","SADM 190400Z 14002KT CAVOK 09/06 Q1023",0,0,0,0,0,0],[19,5,0,0,0,0,"VMC",null,null,0,"","SADM 190500Z 16002KT CAVOK 08/05 Q1023",0,0,0,0,0,0],[19,6,0,0,0,0,"VMC",null,null,0,"","SADM 190600Z 18004KT CAVOK 06/04 Q1023",0,0,0,0,0,0],[19,7,0,0,0,0,"IMC",3000,null,1,"vis 3000 m","SADM 190700Z 20003KT 5000 BR NSC 05/05 Q1024",0,0,0,0,0,0],[19,8,0,0,0,0,"IMC",1500,null,0,"vis 1500 m","SADM 190800Z 18002KT 1500 MIFG BR NSC 04/03 Q1023",0,0,0,0,0,0],[19,9,0,0,0,0,"IMC",1000,null,0,"vis 1000 m","SADM 190900Z 18003KT 1000 MIFG BR NSC 03/02 Q1023",0,0,0,0,0,0],[19,10,0,0,0,0,"IMC",800,null,1,"vis 800 m","SADM 191000Z 18001KT 0800 FG NSC 03/02 Q1024",0,0,0,0,0,0],[19,11,0,0,0,0,"IMC",2500,null,0,"vis 2500 m","SADM 191100Z 14002KT 2500 BR NSC 04/03 Q1024",0,0,0,0,0,0],[19,12,5,0,0,1,"IMC",4000,null,1,"vis 4000 m","SADM 191200Z 14005KT 4000 FU NSC 07/05 Q1024",0,0,0,5,0,0],[19,13,11,1,1,0,"VMC",null,null,0,"","SADM 191300Z 12005KT CAVOK 09/06 Q1025",0,0,0,11,0,0],[19,14,31,1,1,0,"VMC",null,null,0,"","SADM 191400Z 09006KT CAVOK 11/06 Q1024",0,0,0,23,8,0],[19,15,39,0,0,1,"VMC",null,null,0,"","SADM 191500Z 09004KT CAVOK 13/06 Q1024",0,0,0,29,10,0],[19,16,29,0,0,1,"VMC",null,null,0,"","SADM 191600Z 15004KT CAVOK 15/05 Q1023",0,0,0,29,0,0],[19,17,34,1,0,1,"VMC",null,null,0,"","SADM 191700Z 14003KT CAVOK 15/05 Q1022",0,0,0,32,2,0],[19,18,37,0,1,0,"VMC",null,null,0,"","SADM 191800Z 07003KT CAVOK 16/04 Q1021",0,0,0,29,8,0],[19,19,39,0,1,0,"VMC",null,null,0,"","SADM 191900Z 09003KT CAVOK 16/03 Q1020",0,0,0,29,10,0],[19,20,32,0,1,0,"VMC",null,null,0,"","SADM 192000Z 05003KT CAVOK 16/00 Q1020",0,0,0,26,6,0],[19,21,11,0,1,0,"VMC",null,null,0,"","SADM 192100Z 05004KT CAVOK 16/01 Q1021",0,0,0,11,0,0],[19,22,0,0,0,0,"VMC",null,null,0,"","SADM 192200Z 05005KT CAVOK 14/05 Q1021",0,0,0,0,0,0],[19,23,0,0,0,0,"VMC",null,null,0,"","SADM 192300Z 09003KT CAVOK 13/06 Q1020",0,0,0,0,0,0],[20,0,0,0,0,0,"VMC",null,null,0,"","SADM 200000Z 09002KT CAVOK 12/06 Q1020",0,0,0,0,0,0],[20,1,0,0,0,0,"VMC",null,null,0,"","SADM 200100Z 09002KT CAVOK 11/06 Q1020",0,0,0,0,0,0],[20,2,0,0,0,0,"VMC",null,null,0,"","SADM 200200Z 09002KT CAVOK 10/05 Q1020",0,0,0,0,0,0],[20,3,0,0,0,0,"VMC",null,null,0,"","SADM 200300Z 09002KT CAVOK 09/05 Q1019",0,0,0,0,0,0],[20,4,0,0,0,0,"VMC",null,null,0,"","SADM 200400Z 09003KT CAVOK 08/04 Q1019",0,0,0,0,0,0],[20,5,0,0,0,0,"S/D",null,null,0,"","",0,0,0,0,0,0],[20,6,0,0,0,0,"VMC",null,null,0,"","COR SADM 200600Z 18001KT CAVOK 06/04 Q1017",0,0,0,0,0,0],[20,7,0,0,0,0,"VMC",null,null,0,"","SADM 200700Z 00000KT CAVOK 06/03 Q1016",0,0,0,0,0,0],[20,8,0,0,0,0,"VMC",null,null,0,"","SADM 200800Z 18001KT CAVOK 05/03 Q1016",0,0,0,0,0,0],[20,9,0,0,0,0,"VMC",null,null,0,"","SADM 200900Z 18004KT CAVOK 05/03 Q1015",0,0,0,0,0,0],[20,10,0,0,0,0,"IMC",1500,null,1,"vis 1500 m","SADM 201000Z 20006KT 5000 BR FU NSC 06/05 Q1016",0,0,0,0,0,0],[20,11,0,0,0,0,"IMC",200,100,0,"vis 200 m + techo 100 ft","SADM 201100Z 20003KT 0200 FG FU OVC001 06/06 Q1016",1,0,0,0,0,0],[20,12,0,0,0,0,"IMC",200,200,1,"vis 200 m + techo 200 ft","SADM 201200Z 20001KT 0200 FG BKN002 BKN200 07/07 Q1016",1,0,0,0,0,0],[20,13,0,0,0,0,"IMC",3000,20000,0,"vis 3000 m","SADM 201300Z 20002KT 3000 BR SCT006 BKN200 09/08 Q1016",1,0,0,0,0,0],[20,14,0,0,0,0,"IMC",4000,null,0,"vis 4000 m","SADM 201400Z 20004KT 4000 BR NSC 11/06 Q1015",1,0,0,0,0,0],[20,15,30,0,0,1,"VMC",8000,null,0,"","SADM 201500Z 23004KT 8000 NSC 13/03 Q1014",0,0,1,19,10,0],[20,16,41,0,0,1,"VMC",6000,null,0,"","SADM 201600Z 23008KT 6000 NSC 15/04 Q1013",0,0,1,20,20,0],[20,17,42,0,0,1,"VMC",9000,null,0,"","SADM 201700Z 27005KT 9000 NSC 16/04 Q1012",0,0,1,29,12,0],[20,18,44,0,0,1,"VMC",null,null,0,"","SADM 201800Z 27007KT CAVOK 17/04 Q1010",0,0,2,24,18,0],[20,19,35,0,0,1,"VMC",null,null,0,"","SADM 201900Z 23011KT CAVOK 18/03 Q1010",0,0,1,24,10,0],[20,20,24,0,0,1,"VMC",null,null,0,"","SADM 202000Z 24009KT CAVOK 19/06 Q1011",0,0,1,19,4,0],[20,21,15,0,0,1,"VMC",null,null,0,"","SADM 202100Z 23009KT CAVOK 18/05 Q1011",0,0,0,7,8,0],[20,22,0,0,0,0,"VMC",null,null,0,"","SADM 202200Z 19007KT CAVOK 13/06 Q1012",0,0,0,0,0,0],[20,23,0,0,0,0,"VMC",null,null,0,"","SADM 202300Z 20007KT CAVOK 13/07 Q1013",0,0,0,0,0,0],[21,0,0,0,0,0,"VMC",null,null,0,"","SADM 210000Z 18015G27KT CAVOK 13/07 Q1015",0,0,0,0,0,0],[21,1,0,0,0,0,"VMC",null,null,0,"","SADM 210100Z 16016KT CAVOK 12/07 Q1017",0,0,0,0,0,0],[21,2,0,0,0,0,"VMC",null,null,0,"","SADM 210200Z 16013KT CAVOK 11/07 Q1017",0,0,0,0,0,0],[21,3,0,0,0,0,"VMC",null,null,0,"","SADM 210300Z 16014KT CAVOK 10/06 Q1018",0,0,0,0,0,0],[21,4,0,0,0,0,"VMC",null,null,0,"","SADM 210400Z 18012KT CAVOK 10/06 Q1019",0,0,0,0,0,0],[21,5,0,0,0,0,"VMC",null,null,0,"","SADM 210500Z 18011KT CAVOK 09/05 Q1020",0,0,0,0,0,0],[21,6,0,0,0,0,"VMC",null,null,0,"","SADM 210600Z 18010KT CAVOK 09/05 Q1020",0,0,0,0,0,0],[21,7,0,0,0,0,"VMC",null,null,0,"","SADM 210700Z 18006KT CAVOK 07/03 Q1020",0,0,0,0,0,0],[21,8,0,0,0,0,"VMC",null,null,0,"","SADM 210800Z 20006KT CAVOK 06/02 Q1021",0,0,0,0,0,0],[21,9,0,0,0,0,"VMC",null,null,0,"","SADM 210900Z 20008KT CAVOK 06/02 Q1021",0,0,0,0,0,0],[21,10,0,0,0,0,"VMC",null,null,0,"","SADM 211000Z 20006KT CAVOK 06/02 Q1022",0,0,0,0,0,0],[21,11,10,0,0,1,"VMC",null,null,0,"","SADM 211100Z 20007KT CAVOK 04/02 Q1023",0,0,2,8,0,0],[21,12,36,0,0,1,"VMC",null,null,0,"","SADM 211200Z 20008KT CAVOK 06/04 Q1024",0,0,0,20,16,0],[21,13,29,1,0,1,"VMC",null,null,0,"","SADM 211300Z 19010KT CAVOK 08/03 Q1025",0,0,0,19,10,0],[21,14,34,0,0,1,"VMC",null,null,0,"","SADM 211400Z 19012KT 9999 SCT036 09/M01 Q1025",0,0,1,29,2,2],[21,15,22,0,0,1,"VMC",null,4000,0,"","SADM 211500Z 20014KT 9999 BKN040 10/00 Q1026",0,0,0,22,0,0],[21,16,27,0,0,1,"VMC",9000,4200,0,"","SADM 211600Z 20014KT 9000 BKN042 11/M01 Q1025",0,0,0,23,4,0],[21,17,40,0,0,1,"VMC",null,4500,0,"","SADM 211700Z 18014KT 9999 BKN045 11/M01 Q1025",0,0,1,29,10,0],[21,18,28,0,0,1,"VMC",null,4700,0,"","SADM 211800Z 21013KT 9999 BKN047 12/M02 Q1025",0,0,1,27,0,0],[21,19,36,0,0,1,"VMC",null,null,0,"","SADM 211900Z 19016KT 9999 SCT050 12/M01 Q1025",0,0,1,22,12,1],[21,20,32,0,0,1,"VMC",null,null,0,"","SADM 212000Z 20014KT CAVOK 11/M02 Q1025",0,0,3,23,4,2],[21,21,7,0,0,1,"VMC",null,null,0,"","SADM 212100Z 19011KT CAVOK 10/M01 Q1025",0,0,1,6,0,0],[21,22,0,0,0,0,"VMC",null,null,0,"","SADM 212200Z 22006KT CAVOK 08/M01 Q1026",0,0,0,0,0,0],[21,23,0,0,0,0,"VMC",null,null,0,"","SADM 212300Z 25004KT CAVOK 07/M01 Q1026",0,0,0,0,0,0],[22,0,0,0,0,0,"VMC",null,null,0,"","SADM 220000Z 22005KT CAVOK 06/M01 Q1026",0,0,0,0,0,0],[22,1,0,0,0,0,"VMC",null,null,0,"","SADM 220100Z 23005KT CAVOK 05/M00 Q1027",0,0,0,0,0,0],[22,2,0,0,0,0,"VMC",null,null,0,"","SADM 220200Z 23004KT CAVOK 05/M01 Q1027",0,0,0,0,0,0],[22,3,0,0,0,0,"VMC",null,null,0,"","SADM 220300Z 23005KT CAVOK 04/M01 Q1027",0,0,0,0,0,0],[22,4,0,0,0,0,"VMC",null,null,0,"","SADM 220400Z 23004KT CAVOK 04/M01 Q1027",0,0,0,0,0,0],[22,5,0,0,0,0,"VMC",null,null,0,"","SADM 220500Z 25001KT CAVOK 04/M00 Q1027",0,0,0,0,0,0],[22,6,0,0,0,0,"VMC",null,null,0,"","SADM 220600Z 25002KT CAVOK 04/M01 Q1027",0,0,0,0,0,0],[22,7,0,0,0,0,"VMC",null,null,0,"","SADM 220700Z VRB01KT 100V050 CAVOK 03/M00 Q1026",0,0,0,0,0,0],[22,8,0,0,0,0,"VMC",null,null,0,"","SADM 220800Z 25003KT CAVOK 02/M01 Q1026",0,0,0,0,0,0],[22,9,0,0,0,0,"VMC",null,null,0,"","SADM 220900Z 27006KT CAVOK 02/M02 Q1026",0,0,0,0,0,0],[22,10,0,0,0,0,"VMC",null,null,0,"","SADM 221000Z 27006KT CAVOK 03/M02 Q1026",0,0,0,0,0,0],[22,11,8,0,0,1,"VMC",null,null,0,"","SADM 221100Z 27005KT CAVOK 02/M02 Q1026",0,0,0,8,0,0],[22,12,28,0,0,1,"VMC",null,null,0,"","SADM 221200Z 27006KT CAVOK 05/M01 Q1026",0,0,1,23,4,0],[22,13,30,0,0,1,"VMC",null,null,0,"","SADM 221300Z 25008KT CAVOK 08/M01 Q1026",0,0,1,21,8,0],[22,14,35,0,0,1,"VMC",null,null,0,"","SADM 221400Z 24010KT CAVOK 10/M02 Q1026",0,0,0,30,4,1],[22,15,39,0,0,1,"VMC",null,null,0,"","SADM 221500Z 27010KT CAVOK 11/M02 Q1026",0,0,1,32,6,0],[22,16,35,0,0,1,"VMC",null,null,0,"","SADM 221600Z 27011KT CAVOK 12/M03 Q1025",0,0,1,24,10,0],[22,17,34,0,0,1,"VMC",null,null,0,"","SADM 221700Z 27010KT CAVOK 13/M03 Q1024",0,0,1,24,8,1],[22,18,35,0,0,1,"VMC",null,null,0,"","SADM 221800Z 25010KT CAVOK 13/M05 Q1023",0,0,0,31,4,0],[22,19,26,0,0,1,"VMC",null,null,0,"","SADM 221900Z 24012KT CAVOK 13/M05 Q1023",0,0,0,26,0,0],[22,20,49,0,0,1,"VMC",null,null,0,"","SADM 222000Z 24011KT CAVOK 13/M05 Q1023",0,0,1,32,14,2],[22,21,16,0,0,1,"VMC",null,null,0,"","SADM 222100Z 24009KT CAVOK 12/M04 Q1023",0,0,0,8,8,0],[22,22,0,0,0,0,"VMC",null,null,0,"","SADM 222200Z 27005KT CAVOK 11/M03 Q1023",0,0,0,0,0,0],[22,23,0,0,0,0,"VMC",null,null,0,"","SADM 222300Z 27003KT CAVOK 10/M03 Q1023",0,0,0,0,0,0],[23,0,0,0,0,0,"VMC",null,null,0,"","SADM 230000Z 23003KT CAVOK 09/M01 Q1023",0,0,0,0,0,0],[23,1,0,0,0,0,"VMC",null,null,0,"","SADM 230100Z 27004KT CAVOK 08/01 Q1023",0,0,0,0,0,0],[23,2,0,0,0,0,"VMC",null,null,0,"","SADM 230200Z 27005KT CAVOK 08/01 Q1023",0,0,0,0,0,0],[23,3,0,0,0,0,"VMC",null,null,0,"","SADM 230300Z 27006KT CAVOK 07/01 Q1024",0,0,0,0,0,0],[23,4,0,0,0,0,"VMC",null,null,0,"","SADM 230400Z 27004KT CAVOK 07/02 Q1024",0,0,0,0,0,0],[23,5,0,0,0,0,"VMC",null,null,0,"","SADM 230500Z 23004KT CAVOK 06/02 Q1024",0,0,0,0,0,0],[23,6,0,0,0,0,"VMC",null,null,0,"","SADM 230600Z 20003KT CAVOK 06/02 Q1024",0,0,0,0,0,0],[23,7,0,0,0,0,"VMC",null,null,0,"","SADM 230700Z 18006KT CAVOK 05/02 Q1024",0,0,0,0,0,0],[23,8,0,0,0,0,"VMC",null,null,0,"","SADM 230800Z 20005KT CAVOK 05/01 Q1025",0,0,0,0,0,0],[23,9,0,0,0,0,"VMC",null,null,0,"","SADM 230900Z 20005KT CAVOK 05/01 Q1025",0,0,0,0,0,0],[23,10,0,0,0,0,"VMC",null,null,0,"","SADM 231000Z 20002KT CAVOK 04/00 Q1026",0,0,0,0,0,0],[23,11,7,2,0,1,"VMC",null,null,0,"","SADM 231100Z 16004KT CAVOK 04/01 Q1026",0,0,0,7,0,0],[23,12,22,2,0,1,"VMC",null,null,0,"","SADM 231200Z 14004KT CAVOK 06/03 Q1027",0,0,0,17,2,3],[23,13,23,1,0,1,"VMC",null,null,0,"","SADM 231300Z 16005KT CAVOK 08/03 Q1027",0,0,0,19,4,0],[23,14,39,1,0,1,"VMC",null,null,0,"","SADM 231400Z 11005KT 9999 FEW025 10/02 Q1027",0,0,0,27,10,2],[23,15,27,0,0,1,"VMC",null,null,0,"","SADM 231500Z 16005KT 9999 FEW030 11/03 Q1027",0,0,0,19,8,0],[23,16,22,0,0,1,"VMC",null,null,0,"","SADM 231600Z 20006KT 9999 FEW030 11/01 Q1027",0,0,0,20,0,2],[23,17,25,0,0,1,"VMC",null,null,0,"","SADM 231700Z 16007KT 9999 FEW030 12/01 Q1026",0,0,0,9,16,0],[23,18,25,0,0,1,"VMC",null,null,0,"","SADM 231800Z 11005KT 9999 FEW030 12/01 Q1025",0,0,1,12,12,0],[23,19,21,0,0,1,"VMC",null,null,0,"","SADM 231900Z 25002KT 9999 FEW030 13/01 Q1025",0,0,0,17,2,2],[23,20,24,0,1,0,"VMC",null,null,0,"","SADM 232000Z 18004KT CAVOK 12/01 Q1026",0,0,0,12,12,0],[23,21,26,0,1,0,"VMC",null,null,0,"","SADM 232100Z 14003KT CAVOK 12/01 Q1026",0,0,1,5,20,0],[23,22,0,0,0,0,"VMC",null,null,0,"","SADM 232200Z 14003KT CAVOK 11/02 Q1026",0,0,0,0,0,0],[23,23,0,0,0,0,"VMC",null,null,0,"","SADM 232300Z 05001KT CAVOK 11/02 Q1027",0,0,0,0,0,0],[24,0,0,0,0,0,"VMC",null,null,0,"","SADM 240000Z 05002KT CAVOK 09/02 Q1027",0,0,0,0,0,0],[24,1,0,0,0,0,"VMC",null,null,0,"","SADM 240100Z 09002KT 9999 SCT035 08/02 Q1027",0,0,0,0,0,0],[24,2,0,0,0,0,"VMC",null,null,0,"","SADM 240200Z 09004KT CAVOK 08/03 Q1027",0,0,0,0,0,0],[24,3,0,0,0,0,"VMC",null,null,0,"","SADM 240300Z 09002KT CAVOK 08/03 Q1027",0,0,0,0,0,0],[24,4,0,0,0,0,"VMC",null,null,0,"","SADM 240400Z 09003KT CAVOK 08/03 Q1027",0,0,0,0,0,0],[24,5,0,0,0,0,"VMC",null,null,0,"","SADM 240500Z 11002KT CAVOK 07/02 Q1028",0,0,0,0,0,0],[24,6,0,0,0,0,"VMC",null,null,0,"","SADM 240600Z 05002KT CAVOK 06/02 Q1028",0,0,0,0,0,0],[24,7,0,0,0,0,"VMC",null,null,0,"","SADM 240700Z 07002KT CAVOK 05/02 Q1027",0,0,0,0,0,0],[24,8,0,0,0,0,"VMC",null,null,0,"","SADM 240800Z 09002KT CAVOK 06/02 Q1027",0,0,0,0,0,0],[24,9,0,0,0,0,"VMC",null,null,0,"","SADM 240900Z 11002KT CAVOK 07/03 Q1026",0,0,0,0,0,0],[24,10,0,0,0,0,"VMC",null,null,0,"","SADM 241000Z 11001KT CAVOK 06/03 Q1027",0,0,0,0,0,0],[24,11,14,0,1,0,"VMC",6000,null,0,"","SADM 241100Z 09001KT 6000 NSC 06/01 Q1027",0,0,0,4,10,0],[24,12,14,0,1,0,"VMC",6000,null,0,"","SADM 241200Z 19001KT 6000 NSC 08/02 Q1028",0,0,1,9,4,0],[24,13,16,0,1,0,"VMC",9000,null,0,"","SADM 241300Z 34005KT 9000 NSC 10/03 Q1028",0,0,0,11,4,1],[24,14,28,0,1,0,"VMC",9000,3200,0,"","SADM 241400Z 36006KT 9000 BKN032 11/03 Q1028",0,0,0,20,8,0],[24,15,21,0,1,0,"VMC",9000,10000,0,"","SADM 241500Z 05005KT 9000 FEW032 BKN100 11/03 Q1027",0,0,1,18,1,1],[24,16,17,0,1,0,"VMC",null,null,0,"","SADM 241600Z 36009KT CAVOK 12/02 Q1027",0,0,0,17,0,0],[24,17,27,0,1,0,"VMC",9000,null,0,"","SADM 241700Z 36007KT 9000 NSC 12/02 Q1025",0,0,0,15,12,0],[24,18,17,0,1,0,"VMC",9000,null,0,"","SADM 241800Z 05004KT 9000 NSC 12/03 Q1025",0,0,3,14,0,0],[24,19,22,0,1,0,"VMC",9000,null,0,"","SADM 241900Z 05005KT 9000 NSC 12/02 Q1024",0,0,1,17,4,0],[24,20,43,0,1,0,"VMC",9000,null,0,"","SADM 242000Z 05005KT 9000 NSC 12/02 Q1024",0,0,2,21,20,0],[24,21,8,0,1,0,"VMC",null,null,0,"","SADM 242100Z 08005KT CAVOK 12/02 Q1023",0,0,0,6,2,0],[24,22,0,0,0,0,"VMC",null,null,0,"","SADM 242200Z 09005KT CAVOK 11/02 Q1023",0,0,0,0,0,0],[24,23,0,0,0,0,"VMC",null,null,0,"","SADM 242300Z 09005KT CAVOK 10/01 Q1023",0,0,0,0,0,0],[25,0,0,0,0,0,"VMC",null,null,0,"","SADM 250000Z 05004KT CAVOK 10/03 Q1023",0,0,0,0,0,0],[25,1,0,0,0,0,"VMC",null,null,0,"","SADM 250100Z 05004KT CAVOK 10/04 Q1024",0,0,0,0,0,0],[25,2,0,0,0,0,"VMC",null,null,0,"","SADM 250200Z 05006KT CAVOK 09/04 Q1023",0,0,0,0,0,0],[25,3,0,0,0,0,"VMC",null,null,0,"","SADM 250300Z 05008KT CAVOK 09/04 Q1023",0,0,0,0,0,0],[25,4,0,0,0,0,"VMC",null,null,0,"","SADM 250400Z 05008KT CAVOK 09/05 Q1023",0,0,0,0,0,0],[25,5,0,0,0,0,"VMC",null,null,0,"","SADM 250500Z 05005KT CAVOK 09/05 Q1022",0,0,0,0,0,0],[25,6,0,0,0,0,"VMC",null,null,0,"","SADM 250600Z 05006KT CAVOK 08/05 Q1022",0,0,0,0,0,0],[25,7,0,0,0,0,"VMC",null,null,0,"","SADM 250700Z 05003KT CAVOK 08/05 Q1021",0,0,0,0,0,0],[25,8,0,0,0,0,"VMC",null,null,0,"","SADM 250800Z 05005KT CAVOK 08/05 Q1021",0,0,0,0,0,0],[25,9,0,0,0,0,"VMC",null,null,0,"","SADM 250900Z 05003KT CAVOK 08/05 Q1021",0,0,0,0,0,0],[25,10,0,0,0,0,"VMC",null,null,0,"","SADM 251000Z 02004KT CAVOK 08/05 Q1021",0,0,0,0,0,0],[25,11,9,0,1,0,"VMC",null,null,0,"","SADM 251100Z 02008KT CAVOK 09/04 Q1020",0,0,0,9,0,0],[25,12,21,0,1,0,"VMC",null,null,0,"","SADM 251200Z 02009KT CAVOK 09/06 Q1021",0,0,0,19,2,0],[25,13,16,0,1,0,"VMC",null,null,0,"","SADM 251300Z 02006KT CAVOK 10/06 Q1021",0,0,0,14,2,0],[25,14,37,0,1,0,"VMC",null,null,0,"","SADM 251400Z 05007KT CAVOK 12/06 Q1021",0,0,1,27,8,1],[25,15,27,0,1,0,"VMC",null,null,0,"","SADM 251500Z 05007KT CAVOK 13/05 Q1020",0,0,0,17,10,0],[25,16,30,0,1,0,"VMC",null,null,0,"","SADM 251600Z 05008KT CAVOK 13/05 Q1019",0,0,1,17,12,0],[25,17,42,0,1,0,"VMC",null,null,0,"","SADM 251700Z 02009KT CAVOK 14/05 Q1018",0,0,1,29,12,0],[25,18,32,0,1,0,"VMC",null,null,0,"","SADM 251800Z 02007KT CAVOK 14/05 Q1018",0,0,0,28,4,0],[25,19,24,1,1,0,"VMC",null,null,0,"","SADM 251900Z 02008KT CAVOK 15/04 Q1018",0,0,0,24,0,0],[25,20,13,0,1,0,"VMC",null,null,0,"","SADM 252000Z 02007KT CAVOK 14/05 Q1017",0,0,0,13,0,0],[25,21,5,0,1,0,"VMC",null,null,0,"","SADM 252100Z 05007KT CAVOK 13/06 Q1016",0,0,1,4,0,0],[25,22,0,0,0,0,"VMC",null,null,0,"","SADM 252200Z 05008KT CAVOK 12/06 Q1016",0,0,0,0,0,0],[25,23,0,0,0,0,"VMC",null,null,0,"","SADM 252300Z 05005KT CAVOK 13/07 Q1017",0,0,0,0,0,0],[26,0,0,0,0,0,"VMC",null,null,0,"","SADM 260000Z 05005KT CAVOK 13/07 Q1017",0,0,0,0,0,0],[26,1,0,0,0,0,"VMC",null,null,0,"","SADM 260100Z 05007KT CAVOK 13/04 Q1017",0,0,0,0,0,0],[26,2,0,0,0,0,"VMC",null,null,0,"","SADM 260200Z 05006KT CAVOK 13/07 Q1017",0,0,0,0,0,0],[26,3,0,0,0,0,"VMC",null,null,0,"","SADM 260300Z 03006KT CAVOK 13/07 Q1016",0,0,0,0,0,0],[26,4,0,0,0,0,"VMC",null,null,0,"","SADM 260400Z 03006KT CAVOK 12/07 Q1015",0,0,0,0,0,0],[26,5,0,0,0,0,"VMC",null,null,0,"","SADM 260500Z 03006KT CAVOK 12/07 Q1014",0,0,0,0,0,0],[26,6,0,0,0,0,"VMC",null,null,0,"","SADM 260600Z 05009KT CAVOK 12/06 Q1014",0,0,0,0,0,0],[26,7,0,0,0,0,"VMC",null,null,0,"","SADM 260700Z 03006KT CAVOK 11/07 Q1014",0,0,0,0,0,0],[26,8,0,0,0,0,"VMC",null,null,0,"","SADM 260800Z 03007KT CAVOK 11/07 Q1013",0,0,0,0,0,0],[26,9,0,0,0,0,"VMC",null,null,0,"","SADM 260900Z 05007KT CAVOK 11/07 Q1012",0,0,0,0,0,0],[26,10,0,0,0,0,"VMC",null,null,0,"","SADM 261000Z 05006KT CAVOK 10/07 Q1012",0,0,0,0,0,0],[26,11,3,0,1,0,"VMC",null,null,0,"","SADM 261100Z 02007KT CAVOK 11/07 Q1012",0,0,0,3,0,0],[26,12,11,0,1,0,"VMC",null,null,0,"","SADM 261200Z 02007KT CAVOK 11/08 Q1011",0,0,0,7,4,0],[26,13,20,0,1,0,"VMC",null,null,0,"","SADM 261300Z 02007KT CAVOK 12/08 Q1012",0,0,0,10,10,0],[26,14,36,0,1,0,"VMC",null,null,0,"","SADM 261400Z 05005KT CAVOK 13/08 Q1011",0,0,0,22,14,0],[26,15,23,0,1,0,"VMC",null,null,0,"","SADM 261500Z 09009KT CAVOK 15/08 Q1010",0,0,0,21,2,0],[26,16,25,0,1,0,"VMC",null,null,0,"","SADM 261600Z 36010KT CAVOK 15/08 Q1010",0,0,0,15,10,0],[26,17,17,0,1,0,"VMC",null,null,0,"","SADM 261700Z 02008KT CAVOK 16/08 Q1008",0,0,2,15,0,0],[26,18,37,0,1,0,"VMC",null,null,0,"","SADM 261800Z 05006KT CAVOK 16/09 Q1007",0,0,2,23,12,0],[26,19,21,0,1,0,"VMC",null,null,0,"","SADM 261900Z 05006KT CAVOK 16/09 Q1007",0,0,1,15,2,3],[26,20,23,0,0,0,"VMC",null,null,0,"","SADM 262000Z 07005KT CAVOK 16/09 Q1006",0,0,0,22,0,1],[26,21,12,0,0,0,"VMC",null,null,0,"","SADM 262100Z 05007KT CAVOK 16/09 Q1006",0,0,0,6,6,0],[26,22,0,0,0,0,"VMC",null,null,0,"","SADM 262200Z 09005KT CAVOK 15/10 Q1006",0,0,0,0,0,0],[26,23,0,0,0,0,"VMC",null,null,0,"","SADM 262300Z 09002KT CAVOK 15/10 Q1006",0,0,0,0,0,0],[27,0,0,0,0,0,"VMC",null,null,0,"","SADM 270000Z 09002KT CAVOK 14/10 Q1007",0,0,0,0,0,0],[27,1,0,0,0,0,"VMC",null,null,0,"","SADM 270100Z 07002KT CAVOK 14/11 Q1007",0,0,0,0,0,0],[27,2,0,0,0,0,"VMC",null,null,0,"","SADM 270200Z 09004KT CAVOK 15/11 Q1007",0,0,0,0,0,0],[27,3,0,0,0,0,"VMC",null,null,0,"","SADM 270300Z 05004KT CAVOK 15/12 Q1007",0,0,0,0,0,0],[27,4,0,0,0,0,"VMC",9000,10000,0,"","SADM 270400Z 02002KT 9000 -RA FEW019 OVC100 15/12 Q1006",0,0,0,0,0,0],[27,5,0,0,0,0,"VMC",9000,10000,0,"","SADM 270500Z 18006KT 9000 -RA SCT044 OVC100 14/13 Q1006",0,0,0,0,0,0],[27,6,0,0,0,0,"VMC",6000,4700,1,"","SADM 270600Z 18003KT 9999 SCT047 OVC100 14/12 Q1007",0,0,0,0,0,0],[27,7,0,0,0,0,"VMC",6000,4400,0,"","SADM 270700Z 16007KT 6000 RA SCT004 OVC044 13/13 Q1006",0,0,0,0,0,0],[27,8,0,0,0,0,"VMC",8000,4300,0,"","SADM 270800Z 18014KT 8000 -RA SCT005 OVC043 12/12 Q1005",0,0,0,0,0,0],[27,9,0,0,0,0,"VMC",5000,2600,1,"","SADM 270900Z 18012KT 8000 -TSRA FEW007 BKN026 FEW043CB 12/12 Q1006",0,0,0,0,0,0],[27,10,0,0,0,0,"VMC",6000,3600,0,"","SADM 271000Z 18011KT 6000 -TSRA BKN036 FEW043CB 11/11 Q1007",0,0,0,0,0,0],[27,11,0,0,0,0,"VMC",null,4600,0,"","SADM 271100Z 16012KT 9999 OVC046 13/10 Q1007 RETS",0,0,0,0,0,0],[27,12,0,0,0,0,"VMC",9000,null,0,"","SADM 271200Z 18010KT 9000 -RA NSC 13/11 Q1008",0,0,0,0,0,0],[27,13,9,0,0,1,"VMC",null,null,0,"","SADM 271300Z 16009KT CAVOK 13/10 Q1007",0,0,1,8,0,0],[27,14,32,0,0,1,"VMC",9000,null,0,"","SADM 271400Z 09004KT 9000 -RA NSC 13/11 Q1008",0,0,0,12,20,0],[27,15,7,0,0,1,"IMC",4000,5600,1,"vis 4000 m","SADM 271500Z 07003KT 5000 -RA NSC 13/11 Q1008",0,0,0,3,4,0],[27,16,3,0,0,1,"VMC",9000,6000,0,"","SADM 271600Z 11007KT 9000 -RA SCT030 BKN060 13/11 Q1006",0,0,1,2,0,0],[27,17,7,0,0,1,"VMC",null,null,0,"","SADM 271700Z 09008KT CAVOK 15/12 Q1004",0,0,0,7,0,0],[27,18,48,0,0,1,"VMC",null,null,0,"","SADM 271800Z 16008KT CAVOK 16/12 Q1005",0,0,0,14,34,0],[27,19,16,0,0,1,"VMC",9000,null,0,"","SADM 271900Z 18007KT 9000 -RA NSC 15/12 Q1007",0,0,1,11,4,0],[27,20,34,0,0,1,"VMC",null,null,0,"","SADM 272000Z 16005KT CAVOK 15/12 Q1006",0,0,0,14,20,0],[27,21,19,0,0,1,"VMC",null,null,0,"","SADM 272100Z 13002KT CAVOK 15/12 Q1006",0,0,0,7,12,0],[27,22,0,0,0,0,"VMC",null,null,0,"","SADM 272200Z 14002KT CAVOK 14/12 Q1007",0,0,0,0,0,0],[27,23,0,0,0,0,"VMC",null,null,0,"","SADM 272300Z 16005KT CAVOK 14/12 Q1006",0,0,0,0,0,0],[28,0,0,0,0,0,"IMC",4000,null,1,"vis 4000 m","SADM 280000Z 14001KT CAVOK 12/11 Q1007",0,0,0,0,0,0],[28,1,0,0,0,0,"VMC",5000,null,0,"","SADM 280100Z 18006KT 5000 BR NSC 11/10 Q1008",0,0,0,0,0,0],[28,2,0,0,0,0,"VMC",5000,null,1,"","SADM 280200Z 18003KT CAVOK 10/08 Q1009",0,0,0,0,0,0],[28,3,0,0,0,0,"IMC",2000,null,0,"vis 2000 m","SADM 280300Z 20002KT 2000 BR NSC 10/09 Q1010",0,0,0,0,0,0],[28,4,0,0,0,0,"IMC",2000,null,0,"vis 2000 m","SADM 280400Z 20002KT 2000 BR NSC 10/09 Q1010",0,0,0,0,0,0],[28,5,0,0,0,0,"IMC",1500,500,0,"vis 1500 m + techo 500 ft","SADM 280500Z 16004KT 1500 BR BKN005 10/09 Q1009",0,0,0,0,0,0],[28,6,0,0,0,0,"IMC",1200,500,0,"vis 1200 m + techo 500 ft","SADM 280600Z 14003KT 1200 BR BKN005 10/09 Q1008",0,0,0,0,0,0],[28,7,0,0,0,0,"IMC",1200,300,0,"vis 1200 m + techo 300 ft","SADM 280700Z 18003KT 1200 BR OVC003 09/09 Q1009",0,0,0,0,0,0],[28,8,0,0,0,0,"IMC",1200,300,0,"vis 1200 m + techo 300 ft","SADM 280800Z 16002KT 1200 BR OVC003 09/09 Q1008",0,0,0,0,0,0],[28,9,0,0,0,0,"IMC",1500,300,0,"vis 1500 m + techo 300 ft","SADM 280900Z 16007KT 1500 BR BKN003 OVC200 09/09 Q1008",0,0,0,0,0,0],[28,10,0,0,0,0,"IMC",4000,20000,0,"vis 4000 m","SADM 281000Z 14003KT 4000 BR SCT003 BKN200 09/09 Q1009",0,0,0,0,0,0],[28,11,2,0,0,1,"VMC",6000,null,0,"","SADM 281100Z 11002KT 6000 NSC 10/08 Q1010",0,0,0,2,0,0],[28,12,3,1,0,1,"IMC",4000,null,1,"vis 4000 m","SADM 281200Z 11002KT 4000 BR NSC 11/10 Q1010",0,0,0,3,0,0],[28,13,26,0,0,1,"VMC",null,null,0,"","SADM 281300Z 14006KT CAVOK 14/09 Q1011",0,0,0,20,6,0],[28,14,25,0,0,1,"VMC",null,null,0,"","SADM 281400Z 09009KT CAVOK 16/10 Q1011",0,0,0,17,8,0],[28,15,29,0,0,1,"VMC",null,null,0,"","SADM 281500Z 14004KT CAVOK 17/10 Q1011",0,0,0,21,8,0],[28,16,17,0,0,1,"VMC",null,null,0,"","SADM 281600Z 11005KT CAVOK 18/10 Q1011",0,0,0,17,0,0],[28,17,38,0,0,1,"VMC",null,null,0,"","SADM 281700Z 14005KT CAVOK 19/07 Q1010",0,0,2,20,16,0],[28,18,25,0,1,0,"VMC",null,null,0,"","SADM 281800Z 14004KT CAVOK 20/04 Q1010",0,0,1,24,0,0],[28,19,26,0,1,0,"VMC",null,null,0,"","SADM 281900Z 05006KT CAVOK 20/03 Q1010",0,0,1,25,0,0],[28,20,26,0,1,0,"VMC",null,null,0,"","SADM 282000Z 09005KT CAVOK 19/05 Q1011",0,0,1,23,2,0],[28,21,26,0,1,0,"VMC",null,null,0,"","SADM 282100Z 09005KT CAVOK 18/05 Q1011",0,0,1,10,14,1],[28,22,0,0,0,0,"VMC",null,null,0,"","SADM 282200Z 07005KT CAVOK 17/06 Q1011",0,0,0,0,0,0],[28,23,0,0,0,0,"VMC",null,null,0,"","SADM 282300Z 07005KT CAVOK 15/07 Q1012",0,0,0,0,0,0],[29,0,0,0,0,0,"VMC",null,null,0,"","SADM 290000Z 09005KT CAVOK 14/09 Q1013",0,0,0,0,0,0],[29,1,0,0,0,0,"VMC",null,null,0,"","SADM 290100Z 09005KT CAVOK 13/09 Q1012",0,0,0,0,0,0],[29,2,0,0,0,0,"VMC",null,null,0,"","SADM 290200Z 09003KT CAVOK 12/09 Q1013",0,0,0,0,0,0],[29,3,0,0,0,0,"VMC",null,null,0,"","SADM 290300Z 02002KT CAVOK 11/09 Q1014",0,0,0,0,0,0],[29,4,0,0,0,0,"VMC",null,null,0,"","SADM 290400Z 32002KT CAVOK 10/09 Q1015",0,0,0,0,0,0],[29,5,0,0,0,0,"VMC",null,null,0,"","SADM 290500Z 00000KT CAVOK 10/09 Q1015",0,0,0,0,0,0],[29,6,0,0,0,0,"VMC",null,null,0,"","SADM 290600Z 00000KT CAVOK 08/07 Q1015",0,0,0,0,0,0],[29,7,0,0,0,0,"IMC",4000,null,0,"vis 4000 m","SADM 290700Z 00000KT 4000 BR NSC 08/07 Q1014",0,0,0,0,0,0],[29,8,0,0,0,0,"IMC",1000,null,0,"vis 1000 m","SADM 290800Z 00000KT 1000 BR NSC 08/07 Q1014",0,0,0,0,0,0],[29,9,0,0,0,0,"IMC",500,null,0,"vis 500 m","SADM 290900Z 00000KT 0500 FG NSC 05/05 Q1014",0,0,0,0,0,0],[29,10,0,0,0,0,"IMC",900,null,1,"vis 900 m","SADM 291000Z 00000KT 0900 FG NSC 06/06 Q1014",0,0,0,0,0,0],[29,11,0,0,0,0,"S/D",null,null,0,"","",1,0,0,0,0,0],[29,12,6,0,0,1,"IMC",3000,null,1,"vis 3000 m","SADM 291200Z 16003KT 3000 BR NSC 10/09 Q1015",0,0,2,4,0,0],[29,13,30,0,0,1,"VMC",8000,null,0,"","SADM 291300Z 11003KT 8000 NSC 15/09 Q1015",0,0,1,27,2,0],[29,14,29,0,0,1,"VMC",null,null,0,"","SADM 291400Z 09003KT CAVOK 18/07 Q1015",0,0,0,26,2,1],[29,15,55,0,0,1,"VMC",null,null,0,"","SADM 291500Z 09005KT CAVOK 19/06 Q1015",0,0,2,27,26,0],[29,16,30,0,1,0,"VMC",null,null,0,"","SADM 291600Z 09004KT CAVOK 20/06 Q1015",0,0,2,14,14,0],[29,17,20,0,1,0,"VMC",null,null,0,"","SADM 291700Z 07005KT CAVOK 21/07 Q1014",0,0,2,18,0,0],[29,18,27,0,1,0,"VMC",null,null,0,"","SADM 291800Z 09006KT CAVOK 21/06 Q1014",0,0,2,25,0,0],[29,19,37,0,1,0,"VMC",null,null,0,"","SADM 291900Z 05008KT CAVOK 20/05 Q1014",0,0,3,26,8,0],[29,20,28,0,1,0,"VMC",null,null,0,"","SADM 292000Z 05006KT CAVOK 19/05 Q1014",0,0,0,27,0,1],[29,21,21,0,1,0,"VMC",null,null,0,"","SADM 292100Z 05004KT CAVOK 18/05 Q1014",0,0,1,16,4,0],[29,22,0,0,0,0,"VMC",null,null,0,"","SADM 292200Z 07004KT CAVOK 17/05 Q1015",0,0,0,0,0,0],[29,23,0,0,0,0,"VMC",null,null,0,"","SADM 292300Z 09003KT CAVOK 16/05 Q1015",0,0,0,0,0,0],[30,0,0,0,0,0,"VMC",null,null,0,"","SADM 300000Z 09004KT CAVOK 15/06 Q1016",0,0,0,0,0,0],[30,1,0,0,0,0,"VMC",null,null,0,"","SADM 300100Z 07002KT CAVOK 14/09 Q1016",0,0,0,0,0,0],[30,2,0,0,0,0,"VMC",null,null,0,"","SADM 300200Z 07002KT CAVOK 13/09 Q1017",0,0,0,0,0,0],[30,3,0,0,0,0,"VMC",null,null,0,"","SADM 300300Z 11001KT CAVOK 10/07 Q1017",0,0,0,0,0,0],[30,4,0,0,0,0,"VMC",null,null,0,"","SADM 300400Z 09001KT CAVOK 09/07 Q1017",0,0,0,0,0,0],[30,5,0,0,0,0,"VMC",null,null,0,"","SADM 300500Z 09001KT CAVOK 08/06 Q1017",0,0,0,0,0,0],[30,6,0,0,0,0,"VMC",null,null,0,"","SADM 300600Z 09001KT CAVOK 07/05 Q1017",0,0,0,0,0,0],[30,7,0,0,0,0,"VMC",5000,null,0,"","SADM 300700Z 18002KT 5000 BR NSC 06/05 Q1017",0,0,0,0,0,0],[30,8,0,0,0,0,"VMC",9000,null,0,"","SADM 300800Z 02004KT 9000 NSC 10/08 Q1016",0,0,0,0,0,0],[30,9,0,0,0,0,"VMC",9000,null,0,"","SADM 300900Z 32001KT 9000 NSC 08/07 Q1017",0,0,0,0,0,0],[30,10,0,0,0,0,"VMC",9000,null,0,"","SADM 301000Z 02003KT 9000 MIFG NSC 08/07 Q1017",0,0,0,0,0,0],[30,11,3,0,1,0,"VMC",null,null,0,"","SADM 301100Z 02004KT CAVOK 11/08 Q1017",0,0,0,3,0,0],[30,12,16,0,1,0,"VMC",null,null,0,"","SADM 301200Z 36006KT CAVOK 13/08 Q1018",0,0,0,15,0,1],[30,13,30,0,1,0,"VMC",null,null,0,"","SADM 301300Z 36009KT CAVOK 15/10 Q1018",0,0,0,14,16,0],[30,14,24,0,1,0,"VMC",null,null,0,"","SADM 301400Z 05007KT CAVOK 17/10 Q1017",0,0,0,18,6,0],[30,15,22,0,1,0,"VMC",null,null,0,"","SADM 301500Z 05005KT CAVOK 19/09 Q1017",0,0,0,13,8,1],[30,16,23,0,1,0,"VMC",null,null,0,"","SADM 301600Z 02008KT CAVOK 20/05 Q1016",0,0,0,15,8,0],[30,17,31,0,1,0,"VMC",null,null,0,"","COR SADM 301700Z 02008KT CAVOK 21/00 Q1015",0,0,0,17,14,0],[30,18,18,0,1,0,"VMC",null,null,0,"","SADM 301800Z 02008KT CAVOK 21/01 Q1015",0,0,0,14,4,0],[30,19,16,0,1,0,"VMC",null,null,0,"","SADM 301900Z 02007KT CAVOK 21/01 Q1014",0,0,0,12,4,0],[30,20,14,0,1,0,"VMC",null,null,0,"","SADM 302000Z 05007KT CAVOK 21/05 Q1014",0,0,0,12,2,0],[30,21,7,0,1,0,"VMC",null,null,0,"","SADM 302100Z 05004KT CAVOK 20/05 Q1014",0,0,0,7,0,0],[30,22,0,0,0,0,"VMC",null,null,0,"","SADM 302200Z 09006KT CAVOK 19/07 Q1014",0,0,0,0,0,0],[30,23,0,0,0,0,"VMC",null,null,0,"","SADM 302300Z 09005KT CAVOK 17/05 Q1015",0,0,0,0,0,0],[31,0,0,0,0,0,"VMC",null,null,0,"","SADM 310000Z 09005KT CAVOK 16/08 Q1015",0,0,0,0,0,0],[31,1,0,0,0,0,"VMC",null,null,0,"","SADM 310100Z 09004KT CAVOK 16/10 Q1015",0,0,0,0,0,0],[31,2,0,0,0,0,"VMC",null,null,0,"","SADM 310200Z VRB01KT 230V100 CAVOK 15/10 Q1017",0,0,0,0,0,0],[31,3,0,0,0,0,"VMC",null,null,0,"","SADM 310300Z 07008KT CAVOK 16/09 Q1015",0,0,0,0,0,0],[31,4,0,0,0,0,"VMC",null,null,0,"","SADM 310400Z 07002KT CAVOK 16/09 Q1015",0,0,0,0,0,0],[31,5,0,0,0,0,"VMC",null,null,0,"","SADM 310500Z 05003KT CAVOK 15/10 Q1014",0,0,0,0,0,0],[31,6,0,0,0,0,"VMC",null,null,0,"","SADM 310600Z 05007KT CAVOK 16/11 Q1015",0,0,0,0,0,0],[31,7,0,0,0,0,"VMC",null,null,0,"","SADM 310700Z 05010KT CAVOK 16/11 Q1013",0,0,0,0,0,0],[31,8,0,0,0,0,"VMC",null,null,0,"","SADM 310800Z 02009KT CAVOK 15/12 Q1014",0,0,0,0,0,0],[31,9,0,0,0,0,"VMC",null,null,0,"","SADM 310900Z 02009KT CAVOK 14/12 Q1014",0,0,0,0,0,0],[31,10,0,0,0,0,"IMC",null,800,0,"techo 800 ft","SADM 311000Z 36004KT 9999 OVC008 13/11 Q1015",0,0,0,0,0,0],[31,11,0,0,0,0,"IMC",null,900,0,"techo 900 ft","COR SADM 311100Z 02006KT 9999 BKN009 13/11 Q1014",1,0,0,0,0,0],[31,12,2,0,1,0,"VMC",null,1000,0,"","SADM 311200Z 02007KT 9999 BKN010 14/12 Q1014",0,0,0,2,0,0],[31,13,11,0,1,0,"VMC",null,20000,0,"","SADM 311300Z 05005KT 9999 SCT015 BKN200 15/12 Q1015",0,0,1,10,0,0],[31,14,21,0,1,0,"VMC",null,10000,0,"","SADM 311400Z 02002KT 9999 SCT015 BKN100 16/12 Q1015",0,0,0,19,2,0],[31,15,28,0,0,1,"VMC",null,10000,0,"","SADM 311500Z 00000KT 9999 SCT020 BKN100 17/12 Q1016",0,0,1,13,14,0],[31,16,17,0,0,1,"VMC",null,null,0,"","SADM 311600Z 14007KT CAVOK 18/12 Q1015",0,0,0,13,4,0],[31,17,32,0,0,1,"VMC",null,null,0,"","SADM 311700Z 11005KT CAVOK 19/12 Q1014",0,0,0,16,16,0],[31,18,27,0,0,1,"VMC",null,null,0,"","SADM 311800Z 12007KT CAVOK 19/12 Q1014",0,0,1,18,8,0],[31,19,26,0,0,1,"VMC",null,null,0,"","SADM 311900Z 12005KT CAVOK 19/12 Q1014",0,0,0,24,2,0],[31,20,36,0,0,1,"VMC",null,null,0,"","SADM 312000Z 09005KT CAVOK 18/12 Q1015",0,0,1,21,14,0],[31,21,14,0,0,1,"VMC",null,null,0,"","SADM 312100Z 09005KT CAVOK 18/11 Q1015",0,0,0,10,4,0],[31,22,0,0,0,0,"VMC",null,null,0,"","SADM 312200Z 07003KT CAVOK 17/11 Q1015",0,0,0,0,0,0],[31,23,0,0,0,0,"VMC",null,null,0,"","SADM 312300Z 09003KT CAVOK 15/11 Q1017",0,0,0,0,0,0]],"tipos":["Comercial","Oficial","Otros","Local","Sobrevuelo"],"avisos":["4 franjas del mes no tienen reporte METAR y figuran como SIN DATO: 08 ago 07Z, 11 ago 07Z, 20 ago 05Z y 29 ago 11Z. No se rellenaron con la hora anterior.","El METAR del 05/08 05:00Z dice BRK008 en vez de BKN008 — error de tipeo en el origen. No se corrigió. Si era BKN, esa franja es IMC por techo de 800 ft y acá figura como VMC."]};</script><script>
+(function(){
+"use strict";
+var D = window.__DATOS__, ROWS = D.rows, TIPOS = D.tipos, AVISOS = D.avisos;
+// fila: [d,h,tot,ifr,p02,p20,cond,vis,techo,speci,motivo,metar,marca, ...tipos]
+var I={d:0,h:1,tot:2,ifr:3,p02:4,p20:5,cond:6,vis:7,techo:8,speci:9,motivo:10,metar:11,marca:12,tipo0:13};
+var DIAS=31, HORAS=24;
+var nf=new Intl.NumberFormat("es-AR");
+var N=function(v){return nf.format(v);};
+var franja=function(h){return String(h).padStart(2,"0")+" a "+String((h+1)%24).padStart(2,"0");};
+var fecha=function(d){return String(d).padStart(2,"0")+" ago";};
+var css=function(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim();};
+
+/* ---------------- agregados ---------------- */
+var grid={};
+ROWS.forEach(function(r){ grid[r[I.d]+"|"+r[I.h]]=r; });
+var totMes=0, movIMC=0, hIMC=0, hSD=0, hDato=0, maxCelda=0;
+var porDia=[], porHora=[];
+for(var d=1; d<=DIAS; d++) porDia.push({d:d,tot:0,vmc:0,imc:0,hIMC:0});
+for(var h=0; h<HORAS; h++) porHora.push({h:h,tot:0,imc:0,dias:0});
+ROWS.forEach(function(r){
+  var t=r[I.tot], pd=porDia[r[I.d]-1], ph=porHora[r[I.h]];
+  totMes+=t; pd.tot+=t; ph.tot+=t;
+  if(t>maxCelda) maxCelda=t;
+  if(r[I.cond]==="IMC"){ hIMC++; movIMC+=t; pd.imc+=t; pd.hIMC++; ph.imc++; ph.dias++; }
+  else if(r[I.cond]==="VMC"){ pd.vmc+=t; ph.dias++; }
+  else hSD++;
+  if(r[I.cond]!=="S/D") hDato++;
+});
+var imcConTrafico=ROWS.filter(function(r){return r[I.cond]==="IMC" && r[I.tot]>0;})
+                      .sort(function(a,b){return b[I.tot]-a[I.tot];});
+var totTipo=TIPOS.map(function(_,i){return ROWS.reduce(function(s,r){return s+r[I.tipo0+i];},0);});
+var hP02=ROWS.reduce(function(s,r){return s+r[I.p02];},0);
+var hP20=ROWS.reduce(function(s,r){return s+r[I.p20];},0);
+var marcadas=ROWS.filter(function(r){return r[I.marca];}).length;
+
+/* ---------------- tiles ---------------- */
+var tiles=[
+  {lab:"Movimientos del mes", val:N(totMes), sub:"31 días · 744 franjas horarias"},
+  {lab:"Franjas con reporte METAR", val:N(hDato), sub:hSD?N(hSD)+" franjas sin reporte":"cobertura completa"},
+  {lab:"Franjas con el aeródromo bajo IMC", val:N(hIMC),
+   sub:(hIMC/hDato*100).toFixed(1).replace(".",",")+" % de las "+N(hDato)+" franjas con reporte", hot:true},
+  {lab:"De esas franjas IMC, sin ningún movimiento", val:N(hIMC-imcConTrafico.length),
+   sub:"el aeródromo no operó en esas horas"},
+  {lab:"De esas franjas IMC, con movimientos", val:N(imcConTrafico.length),
+   sub:N(movIMC)+" movimientos, "+(movIMC/totMes*100).toFixed(1).replace(".",",")+" % del mes", hot:true},
+  {lab:"Franjas marcadas IMC a mano en la planilla", val:N(marcadas), sub:"registro manual de la torre"}
+];
+document.getElementById("tiles").innerHTML=tiles.map(function(t){
+  return '<div class="tile'+(t.hot?" hot":"")+'"><div class="lab">'+t.lab+'</div>'+
+         '<div class="val">'+t.val+'</div><div class="sub">'+t.sub+'</div></div>';
+}).join("");
+
+document.getElementById("nota-resumen").textContent =
+ "Cómo leer las tres cifras de IMC: durante el mes hubo "+N(hIMC)+" franjas horarias con el aeródromo bajo IMC. "+
+ "En "+N(hIMC-imcConTrafico.length)+" de ellas no se registró ningún movimiento y en las otras "+imcConTrafico.length+" se operó igual, "+
+ "con "+N(movIMC)+" movimientos en total. Las dos cifras suman las "+N(hIMC)+" franjas: no se superponen.";
+
+/* ---------------- tooltip ---------------- */
+var tip=document.getElementById("tip");
+function showTip(html,ev){
+  tip.innerHTML=html; tip.classList.add("on");
+  var r=tip.getBoundingClientRect();
+  var x=ev.clientX+16, y=ev.clientY+16;
+  if(x+r.width>innerWidth-10) x=ev.clientX-r.width-16;
+  if(y+r.height>innerHeight-10) y=ev.clientY-r.height-16;
+  tip.style.left=Math.max(8,x)+"px"; tip.style.top=Math.max(8,y)+"px";
+}
+function hideTip(){ tip.classList.remove("on"); }
+document.addEventListener("scroll",hideTip,{passive:true});
+
+function tipCeldaNoUsada(r){
+  var pill=r[I.cond]==="IMC"?'<span class="pill pill-imc">IMC</span>'
+        :r[I.cond]==="VMC"?'<span class="pill pill-vmc">VMC</span>'
+        :'<span class="pill pill-vmc">SIN DATO</span>';
+  var h='<div class="t-h">'+fecha(r[I.d])+' &middot; '+franja(r[I.h])+' Z'+pill+'</div>';
+  h+='<div class="t-r"><span>Movimientos</span><span>'+N(r[I.tot])+'</span></div>';
+  if(r[I.cond]!=="S/D"){
+    h+='<div class="t-r"><span>Visibilidad</span><span>'+(r[I.vis]===null?"10 km o más":N(r[I.vis])+" m")+'</span></div>';
+    h+='<div class="t-r"><span>Techo</span><span>'+(r[I.techo]===null?"sin capa":N(r[I.techo])+" ft")+'</span></div>';
+    if(r[I.speci]) h+='<div class="t-r"><span>SPECI en la franja</span><span>sí</span></div>';
+    if(r[I.metar]) h+='<div class="t-m">'+r[I.metar]+'</div>';
+  }
+  return h;
+}
+
+/* ---------------- motor de barras ---------------- */
+function ticks(max){
+  if(max<=0) return [0,1];
+  var raw=max/4, mag=Math.pow(10,Math.floor(Math.log10(raw)));
+  var n=[1,2,2.5,5,10].find(function(m){return raw<=m*mag;})*mag;
+  var t=[]; for(var v=0; v<=max+n*0.001; v+=n) t.push(v);
+  if(t[t.length-1]<max) t.push(t[t.length-1]+n);
+  return t;
+}
+function barPath(x,y,w,hh,r){
+  r=Math.min(r,w/2,hh); if(hh<=0) return "";
+  return "M"+x+","+(y+hh)+" L"+x+","+(y+r)+" Q"+x+","+y+" "+(x+r)+","+y+
+         " L"+(x+w-r)+","+y+" Q"+(x+w)+","+y+" "+(x+w)+","+(y+r)+
+         " L"+(x+w)+","+(y+hh)+" Z";
+}
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;");}
+
+function barras(sel,o){
+  var W=o.w||760, H=o.h||190, m={t:14,r:8,b:26,l:o.l||38};
+  var n=o.cats.length, iw=W-m.l-m.r, ih=H-m.t-m.b;
+  var band=iw/n, bw=Math.min(o.maxBar||22, band-4);
+  var totals=o.cats.map(function(_,i){
+    return o.series.reduce(function(s,se){return s+(se.vals[i]||0);},0);});
+  var max=Math.max.apply(null,totals.concat([o.min||0]));
+  var tk=ticks(max), top=tk[tk.length-1];
+  var y=function(v){return m.t+ih-(v/top)*ih;};
+  var s=['<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+esc(o.aria||"")+'">'];
+  tk.forEach(function(v){
+    s.push('<line class="gl" x1="'+m.l+'" y1="'+y(v).toFixed(1)+'" x2="'+(W-m.r)+'" y2="'+y(v).toFixed(1)+'"/>');
+    s.push('<text class="ax" x="'+(m.l-6)+'" y="'+(y(v)+3.2).toFixed(1)+'" text-anchor="end">'+(o.fmtY?o.fmtY(v):N(v))+'</text>');
+  });
+  s.push('<line class="bl" x1="'+m.l+'" y1="'+y(0)+'" x2="'+(W-m.r)+'" y2="'+y(0)+'"/>');
+  o.cats.forEach(function(c,i){
+    var x=m.l+band*i+(band-bw)/2, acc=0;
+    var segs=o.series.map(function(se){return se.vals[i]||0;});
+    var ultimo=segs.reduce(function(p,v,j){return v>0?j:p;},-1);
+    o.series.forEach(function(se,j){
+      var v=segs[j]; if(v<=0) return;
+      var y0=y(acc+v), y1=y(acc), hh=y1-y0;
+      var gap=(j===ultimo)?0:2;
+      var esTop=(j===ultimo);
+      s.push('<path d="'+(esTop?barPath(x,y0,bw,hh,4):barPath(x,y0+0,bw,Math.max(0,hh-gap),0))+
+             '" fill="'+se.color+'"/>');
+      acc+=v;
+    });
+    if(o.dlab && o.dlab(i,totals[i],segs)){
+      s.push('<text class="dlab" x="'+(x+bw/2)+'" y="'+(y(totals[i])-5).toFixed(1)+'" text-anchor="middle">'+o.dlab(i,totals[i],segs)+'</text>');
+    }
+    if(!o.everyOther || i%o.everyOther===0)
+      s.push('<text class="ax" x="'+(x+bw/2)+'" y="'+(H-m.b+13)+'" text-anchor="middle">'+esc(c)+'</text>');
+    s.push('<rect class="hit" x="'+(m.l+band*i)+'" y="'+m.t+'" width="'+band+'" height="'+ih+'" data-i="'+i+'"/>');
+  });
+  if(o.xlab) s.push('<text class="axl" x="'+(m.l)+'" y="'+(H-2)+'">'+esc(o.xlab)+'</text>');
+  s.push('</svg>');
+  var el=document.querySelector(sel); el.innerHTML=s.join("");
+  el.addEventListener("mousemove",function(e){
+    var t=e.target.closest(".hit"); if(!t){hideTip();return;}
+    showTip(o.tip(+t.dataset.i),e);
+  });
+  el.addEventListener("mouseleave",hideTip);
+}
+
+var COL_MOV=css("--mov"), COL_IMC=css("--imc");
+
+barras("#c-dia",{
+  cats:porDia.map(function(p){return p.d;}), h:210, maxBar:20, everyOther:2,
+  aria:"Movimientos por día separados entre franjas VMC e IMC",
+  xlab:"día de agosto",
+  series:[{name:"VMC",color:COL_MOV,vals:porDia.map(function(p){return p.vmc;})},
+          {name:"IMC",color:COL_IMC,vals:porDia.map(function(p){return p.imc;})}],
+  dlab:function(i,tot,segs){return segs[1]>=25?segs[1]:"";},
+  tip:function(i){var p=porDia[i];
+    return '<div class="t-h">'+fecha(p.d)+'</div>'+
+      '<div class="t-r"><span>Total del día</span><span>'+N(p.tot)+'</span></div>'+
+      '<div class="t-r"><span>En franja VMC</span><span>'+N(p.vmc)+'</span></div>'+
+      '<div class="t-r"><span>En franja IMC</span><span>'+N(p.imc)+'</span></div>'+
+      '<div class="t-r"><span>Franjas IMC</span><span>'+p.hIMC+' de 24</span></div>';}
+});
+barras("#c-imcdia",{
+  cats:porDia.map(function(p){return p.d;}), h:150, maxBar:20, everyOther:2, min:24,
+  aria:"Franjas bajo IMC por día", xlab:"día de agosto",
+  series:[{name:"Franjas IMC",color:COL_IMC,vals:porDia.map(function(p){return p.hIMC;})}],
+  tip:function(i){var p=porDia[i];
+    return '<div class="t-h">'+fecha(p.d)+'</div>'+
+      '<div class="t-r"><span>Franjas bajo IMC</span><span>'+p.hIMC+' de 24</span></div>'+
+      '<div class="t-r"><span>Movimientos</span><span>'+N(p.tot)+'</span></div>';}
+});
+barras("#c-hora",{
+  cats:porHora.map(function(p){return String(p.h).padStart(2,"0");}), h:210, w:520, maxBar:16, everyOther:2,
+  aria:"Movimientos por franja horaria", xlab:"franja horaria UTC",
+  series:[{name:"Movimientos",color:COL_MOV,vals:porHora.map(function(p){return p.tot;})}],
+  tip:function(i){var p=porHora[i];
+    return '<div class="t-h">Franja '+franja(p.h)+' Z</div>'+
+      '<div class="t-r"><span>Movimientos del mes</span><span>'+N(p.tot)+'</span></div>'+
+      '<div class="t-r"><span>Días bajo IMC</span><span>'+p.imc+' de '+p.dias+'</span></div>';}
+});
+barras("#c-imchora",{
+  cats:porHora.map(function(p){return String(p.h).padStart(2,"0");}), h:210, w:520, maxBar:16, everyOther:2,
+  aria:"Porcentaje de días con IMC por hora del día", xlab:"franja horaria UTC",
+  fmtY:function(v){return v+"%";},
+  series:[{name:"% días IMC",color:COL_IMC,
+    vals:porHora.map(function(p){return p.dias?Math.round(p.imc/p.dias*100):0;})}],
+  tip:function(i){var p=porHora[i];
+    return '<div class="t-h">Franja '+franja(p.h)+' Z</div>'+
+      '<div class="t-r"><span>Días bajo IMC</span><span>'+p.imc+' de '+p.dias+'</span></div>'+
+      '<div class="t-r"><span>Movimientos del mes</span><span>'+N(p.tot)+'</span></div>';}
+});
+
+/* ---------------- barras horizontales ---------------- */
+function hbarras(sel,o){
+  var W=520, rowH=34, m={t:6,r:o.r||60,b:6,l:o.l||92};
+  var H=m.t+m.b+o.cats.length*rowH, iw=W-m.l-m.r;
+  var max=Math.max.apply(null,o.vals), bh=16;
+  var s=['<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+esc(o.aria||"")+'">'];
+  o.cats.forEach(function(c,i){
+    var y=m.t+i*rowH+(rowH-bh)/2, w=max?Math.max(0,o.vals[i]/max*iw):0;
+    s.push('<text class="ax" x="'+(m.l-8)+'" y="'+(y+bh/2+3.2)+'" text-anchor="end" style="font-size:11.5px;fill:var(--ink-2)">'+esc(c)+'</text>');
+    s.push('<rect x="'+m.l+'" y="'+y+'" width="'+iw+'" height="'+bh+'" rx="2" fill="var(--s0)"/>');
+    if(w>0){
+      var r=Math.min(4,w);
+      s.push('<path d="M'+m.l+','+y+' L'+(m.l+w-r)+','+y+' Q'+(m.l+w)+','+y+' '+(m.l+w)+','+(y+r)+
+             ' L'+(m.l+w)+','+(y+bh-r)+' Q'+(m.l+w)+','+(y+bh)+' '+(m.l+w-r)+','+(y+bh)+
+             ' L'+m.l+','+(y+bh)+' Z" fill="'+o.color+'"/>');
+    }
+    s.push('<text class="ax" x="'+(m.l+w+8)+'" y="'+(y+bh/2+3.5)+'" style="font-size:12px;font-weight:500;fill:var(--ink)">'+esc(o.fmt(o.vals[i]))+'</text>');
+  });
+  s.push('</svg>');
+  document.querySelector(sel).innerHTML=s.join("");
+}
+var ordTipo=TIPOS.map(function(t,i){return {t:t,v:totTipo[i]};}).sort(function(a,b){return b.v-a.v;});
+hbarras("#c-tipo",{cats:ordTipo.map(function(x){return x.t;}), vals:ordTipo.map(function(x){return x.v;}),
+  color:COL_MOV, r:150, fmt:function(v){return N(v)+"  ·  "+(v/totMes*100).toFixed(1).replace(".",",")+" %";},
+  aria:"Movimientos por tipo"});
+hbarras("#c-pista",{cats:["Pista 02","Pista 20"], vals:[hP02,hP20], color:COL_MOV, l:70, r:120,
+  fmt:function(v){return N(v)+" franjas";}, aria:"Franjas por pista en uso"});
+
+/* ---------------- tablas ---------------- */
+document.getElementById("t-dia").innerHTML=
+ '<thead><tr><th>Día</th><th>Movimientos</th><th>En VMC</th><th>En IMC</th><th>Franjas IMC</th></tr></thead><tbody>'+
+ porDia.map(function(p){return '<tr><td>'+fecha(p.d)+'</td><td class="n">'+N(p.tot)+'</td><td class="n">'+N(p.vmc)+
+   '</td><td class="n">'+N(p.imc)+'</td><td class="n">'+p.hIMC+' / 24</td></tr>';}).join("")+'</tbody>';
+
+document.getElementById("lede-imc").textContent=
+ "Franjas en las que el aeródromo estuvo bajo IMC (visibilidad menor a 5 km o techo menor a 1000 ft) y aun así se registraron movimientos: "+
+ imcConTrafico.length+" franjas, "+N(imcConTrafico.reduce(function(s,r){return s+r[I.tot];},0))+
+ " movimientos en total. Ninguna figura marcada en la planilla, porque la marca manual sólo se escribe cuando la franja queda en cero.";
+
+document.getElementById("t-imc").innerHTML=
+ '<thead><tr><th>Fecha</th><th>Franja Z</th><th>Mov.</th><th>Motivo</th><th>METAR observado</th></tr></thead><tbody>'+
+ imcConTrafico.map(function(r){
+   return '<tr><td>'+fecha(r[I.d])+'</td><td>'+franja(r[I.h])+'</td><td class="n">'+N(r[I.tot])+
+     '</td><td><span class="tag">'+esc(r[I.motivo]||"IMC")+'</span></td><td class="m">'+esc(r[I.metar])+'</td></tr>';
+ }).join("")+'</tbody>';
+
+document.getElementById("avisos").innerHTML=AVISOS.map(function(a){return '<li>'+esc(a)+'</li>';}).join("");
+})();
+</script>
+
+</body>
+</html>
