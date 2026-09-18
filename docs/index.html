@@ -390,10 +390,10 @@
 
 <section class="criteria" aria-label="Criterio aplicado">
   <div class="criteria-box">
-    <strong>Criterio IMC:</strong> el aeródromo se considera bajo IMC cuando la visibilidad es menor a 5000&nbsp;m
-    o el techo de nubes es menor a 1000&nbsp;ft. <strong>Techo</strong> = base de la capa más baja BKN u OVC, o la
-    visibilidad vertical (VV); SCT y FEW no cuentan como techo. Cada franja horaria toma la
-    <strong>peor condición</strong> reportada dentro de la hora, incluyendo los SPECI. Todos los horarios en
+    <strong>Criterio IMC:</strong> se considera el aeródromo en condiciones IMC cuando la visibilidad es menor a 5000&nbsp;m
+    o el techo de nubes se encuentra a menos de 1000&nbsp;ft. <strong>Techo de nubes</strong> = base de la capa inferior de
+    nubes, por debajo de 20.000&nbsp;ft (6000&nbsp;m), que cubre más de la mitad del cielo (BKN/OVC). Cada franja horaria
+    toma la <strong>peor condición</strong> reportada dentro de la hora, incluyendo los SPECI. Todos los horarios en
     <strong>UTC (Z)</strong>.
   </div>
 </section>
@@ -501,7 +501,7 @@
   }
   tiles.appendChild(tile(movTot, 'Movimientos del mes', claves.length + ' días · ' + totH + ' franjas horarias'));
   tiles.appendChild(tile(imc + vmc, 'Franjas con reporte METAR', sd + ' franjas sin reporte'));
-  tiles.appendChild(tile(imc, 'Franjas con el aeródromo bajo IMC', pct(imc, imc + vmc) + '% de las ' + (imc + vmc) + ' franjas con reporte'));
+  tiles.appendChild(tile(imc, 'Franjas con el aeródromo en IMC', pct(imc, imc + vmc) + '% de las ' + (imc + vmc) + ' franjas con reporte'));
   tiles.appendChild(tile(imcSinMov, 'De esas franjas IMC, sin ningún movimiento', 'el aeródromo no operó en esas horas'));
   tiles.appendChild(tile(imcTrafH, 'De esas franjas IMC, con movimientos', imcTrafMov + ' movimientos, ' + pct(movImc, movTot) + '% del mes'));
 
